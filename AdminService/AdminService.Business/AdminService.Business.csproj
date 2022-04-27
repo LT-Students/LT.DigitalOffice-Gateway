@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(ProjectDir)..\..\Common.Configurations.targets" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\AdminService.Data\AdminService.Data.csproj" />
+    <ProjectReference Include="..\AdminService.Mappers\AdminService.Mappers.csproj" />
+    <ProjectReference Include="..\AdminService.Models.Db\AdminService.Models.Db.csproj" />
+    <ProjectReference Include="..\AdminService.Models.Dto\AdminService.Models.Dto.csproj" />
+    <ProjectReference Include="..\AdminService.Validation\AdminService.Validation.csproj" />
+  </ItemGroup>
+
+</Project>
