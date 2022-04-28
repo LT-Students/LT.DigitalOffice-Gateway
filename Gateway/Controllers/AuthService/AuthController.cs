@@ -1,9 +1,9 @@
-﻿using LT.DigitalOffice.AdminService.Data.Interfaces;
+﻿using LT.DigitalOffice.AuthService.Client.Interfaces;
 using LT.DigitalOffice.AuthService.Models.Dto.Requests;
 using LT.DigitalOffice.AuthService.Models.Dto.Responses;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Gateway.Controllers.AdminService
+namespace Gateway.Controllers.AuthService
 {
   [Route("[controller]")]
   [ApiController]
@@ -19,13 +19,13 @@ namespace Gateway.Controllers.AdminService
     [HttpPost("login")]
     public async Task<LoginResult> LoginUser([FromBody] LoginRequest userCredentials)
     {
-      return await command.Execute(userCredentials);
+      return await _client.LoginUser(userCredentials);
     }
 
     [HttpPost("refresh")]
     public LoginResult RefreshToken([FromBody] RefreshRequest refreshToken)
     {
-      return command.Execute(refreshToken);
+      return _client.RefreshToken(refreshToken);
     }
   }
 }

@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using System.Web.Mvc;
 using LT.DigitalOffice.AdminService.Client.Interfaces;
 using LT.DigitalOffice.AdminService.Models.Dto.Models;
 using LT.DigitalOffice.AdminService.Models.Dto.Requests;
