@@ -1,1 +1,1 @@
-# LT.DigitalOffice-Gateway
+# DigitalOffice-Gateway
