@@ -118,7 +118,7 @@ namespace LT.DigitalOffice.AdminService.Validation
         .DependentRules(() =>
         {
           RuleFor(r => r.GuiInfo.SiteUrl)
-            .NotEmpty().WithMessage("First name cannot be empty.");
+            .NotEmpty().WithMessage("SiteUrl cannot be empty.");
 
           When(r => r.GuiInfo.Logo is not null, () =>
           {

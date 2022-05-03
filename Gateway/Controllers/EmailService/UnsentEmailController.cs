@@ -6,7 +6,7 @@ using LT.DigitalOffice.Kernel.Requests;
 using LT.DigitalOffice.Kernel.Responses;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Gateway.Controllers.EmailService
+namespace LT.DigitalOffice.Gateway.Controllers.EmailService
 {
   [Route("[controller]")]
   [ApiController]

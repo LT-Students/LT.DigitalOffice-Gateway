@@ -4,7 +4,7 @@ using LT.DigitalOffice.AuthService.Models.Dto.Requests;
 using LT.DigitalOffice.AuthService.Models.Dto.Responses;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Gateway.Controllers.AuthService
+namespace LT.DigitalOffice.Gateway.Controllers.AuthService
 {
   [Route("[controller]")]
   [ApiController]

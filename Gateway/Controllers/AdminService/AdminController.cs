@@ -7,7 +7,7 @@ using LT.DigitalOffice.Kernel.Requests;
 using LT.DigitalOffice.Kernel.Responses;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Gateway.Controllers.AdminService
+namespace LT.DigitalOffice.Gateway.Controllers.AdminService
 {
   [ApiController]
   [Route("{controller}")]

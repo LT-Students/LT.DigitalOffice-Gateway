@@ -6,7 +6,7 @@ using LT.DigitalOffice.Kernel.Responses;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Gateway.Controllers.AdminService
+namespace LT.DigitalOffice.Gateway.Controllers.AdminService
 {
   [ApiController]
   [Route("{controller}")]

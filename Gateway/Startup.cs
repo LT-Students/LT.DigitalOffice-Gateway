@@ -14,7 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Gateway
+namespace LT.DigitalOffice.Gateway
 {
   public class Startup : BaseApiInfo
   {
