@@ -1,4 +1,5 @@
-﻿using LT.DigitalOffice.AdminService.Client.Interfaces;
+﻿using System.Threading.Tasks;
+using LT.DigitalOffice.AdminService.Client.Interfaces;
 using LT.DigitalOffice.AdminService.Models.Dto.Models;
 using LT.DigitalOffice.AdminService.Models.Dto.Requests;
 using LT.DigitalOffice.Kernel.Responses;

@@ -1,4 +1,5 @@
-﻿using LT.DigitalOffice.AuthService.Client.Interfaces;
+﻿using System.Threading.Tasks;
+using LT.DigitalOffice.AuthService.Client.Interfaces;
 using LT.DigitalOffice.AuthService.Models.Dto.Requests;
 using LT.DigitalOffice.AuthService.Models.Dto.Responses;
 using Microsoft.AspNetCore.Mvc;

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Text.Json.Serialization;
 using LT.DigitalOffice.AdminService.Client;
 using LT.DigitalOffice.AdminService.Client.Interfaces;
 using LT.DigitalOffice.AdminService.Data.Interfaces;
@@ -8,10 +9,13 @@ using LT.DigitalOffice.EmailService.Data.Interfaces;
 using LT.DigitalOffice.Kernel.Configurations;
 using LT.DigitalOffice.Kernel.Extensions;
 using LT.DigitalOffice.Kernel.Middlewares.ApiInformation;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Gateway
 {
-
   public class Startup : BaseApiInfo
   {
     public const string CorsPolicyName = "LtDoCorsPolicy";
@@ -27,13 +31,17 @@ namespace Gateway
       _serviceInfoConfig = Configuration
         .GetSection(BaseServiceInfoConfig.SectionName)
         .Get<BaseServiceInfoConfig>();
+
+      Version = "1.0.0.0";
+      Description = "Gateway is a pattern for a single entry point to the program.";
+      StartTime = DateTime.UtcNow;
+      ApiName = $"LT Digital Office - {_serviceInfoConfig.Name}";
     }
 
     #region public methods
 
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddHttpClient<IAdminControllerClient, AdminControllerClient>(x => x.BaseAddress = new Uri("http://localhost:9838"));
       services.AddTransient<IAdminControllerClient, AdminControllerClient>();
       services.AddTransient<IGraphicalUserInterfaceControllerClient, GraphicalUserInterfaceControllerClient>();
       services.AddTransient<IModuleSettingControllerClient, ModuleSettingControllerClient>();
@@ -55,6 +63,7 @@ namespace Gateway
       services.Configure<BaseServiceInfoConfig>(Configuration.GetSection(BaseServiceInfoConfig.SectionName));
 
       services.AddHttpContextAccessor();
+
       services
         .AddControllers()
         .AddJsonOptions(options =>
