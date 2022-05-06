@@ -25,7 +25,7 @@ namespace LT.DigitalOffice.EmailService.Client
       _httpContextAccessor = httpContextAccessor;
       _client = new HttpClient();
 
-      _client.BaseAddress = new Uri("http://localhost:5158/");
+      _client.BaseAddress = new Uri("http://localhost:9801/");
       _client.DefaultRequestHeaders.Accept.Clear();
       _client.DefaultRequestHeaders.Accept.Add(
           new MediaTypeWithQualityHeaderValue("application/json"));
