@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using LT.DigitalOffice.EmailService.Client.Interfaces;
 using LT.DigitalOffice.EmailService.Models.Dto.Models;
+using LT.DigitalOffice.Gateway.Clients.EmailServiceClients.Interfaces;
 using LT.DigitalOffice.Kernel.Requests;
 using LT.DigitalOffice.Kernel.Responses;
 using Microsoft.AspNetCore.Mvc;

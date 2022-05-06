@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Text.Json.Serialization;
-using LT.DigitalOffice.AdminService.Client;
-using LT.DigitalOffice.AdminService.Client.Interfaces;
-using LT.DigitalOffice.AdminService.Data.Interfaces;
-using LT.DigitalOffice.EmailService.Client;
-using LT.DigitalOffice.EmailService.Client.Interfaces;
-using LT.DigitalOffice.EmailService.Data.Interfaces;
+using LT.DigitalOffice.Gateway.Clients.AdminServiceClients;
+using LT.DigitalOffice.Gateway.Clients.AdminServiceClients.Interfaces;
+using LT.DigitalOffice.Gateway.Clients.EmailServiceClients;
+using LT.DigitalOffice.Gateway.Clients.EmailServiceClients.Interfaces;
 using LT.DigitalOffice.Kernel.Configurations;
 using LT.DigitalOffice.Kernel.Extensions;
 using LT.DigitalOffice.Kernel.Middlewares.ApiInformation;
@@ -42,9 +40,9 @@ namespace LT.DigitalOffice.Gateway
 
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddTransient<IAdminControllerClient, AdminControllerClient>();
+   //   services.AddTransient<IAdminControllerClient, AdminControllerClient>();
       services.AddTransient<IGraphicalUserInterfaceControllerClient, GraphicalUserInterfaceControllerClient>();
-      services.AddTransient<IModuleSettingControllerClient, ModuleSettingControllerClient>();
+     // services.AddTransient<IModuleSettingControllerClient, ModuleSettingControllerClient>();
       services.AddTransient<IUnsentEmailController, UnsentEmailController>();
 
       services.AddCors(options =>

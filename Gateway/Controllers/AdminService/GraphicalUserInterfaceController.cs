@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using LT.DigitalOffice.AdminService.Client.Interfaces;
 using LT.DigitalOffice.AdminService.Models.Dto.Models;
 using LT.DigitalOffice.AdminService.Models.Dto.Requests;
+using LT.DigitalOffice.Gateway.Clients.AdminServiceClients.Interfaces;
 using LT.DigitalOffice.Kernel.Responses;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;

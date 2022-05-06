@@ -14,11 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AdminService\AdminService.Client\AdminService.Client.csproj" />
     <ProjectReference Include="..\AdminService\AdminService.Models.Dto\AdminService.Models.Dto.csproj" />
-    <ProjectReference Include="..\AuthService\AuthService.Client\AuthService.Client.csproj" />
     <ProjectReference Include="..\AuthService\AuthService.Models.Dto\AuthService.Models.Dto.csproj" />
-    <ProjectReference Include="..\EmailService\EmailService.Client\EmailService.Client.csproj" />
     <ProjectReference Include="..\EmailService\EmailService.Models.Dto\EmailService.Models.Dto.csproj" />
   </ItemGroup>
 
