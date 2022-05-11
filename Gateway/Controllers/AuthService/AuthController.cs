@@ -24,9 +24,9 @@ namespace LT.DigitalOffice.Gateway.Controllers.AuthService
     }
 
     [HttpPost("refresh")]
-    public LoginResult RefreshToken([FromBody] RefreshRequest refreshToken)
+    public async Task<LoginResult> RefreshToken([FromBody] RefreshRequest refreshToken)
     {
-      return _client.RefreshToken(refreshToken);
+      return await _client.RefreshTokenAsync(refreshToken);
     }
   }
 }

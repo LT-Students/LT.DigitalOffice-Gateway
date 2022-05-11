@@ -10,6 +10,6 @@ namespace LT.DigitalOffice.Gateway.Clients.AuthServiceClients.Interfaces
   {
     Task<LoginResult> LoginUser(LoginRequest userCredentials);
 
-    LoginResult RefreshToken(RefreshRequest refreshToken);
+    Task<LoginResult> RefreshTokenAsync(RefreshRequest refreshToken);
   }
 }

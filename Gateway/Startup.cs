@@ -2,6 +2,8 @@
 using System.Text.Json.Serialization;
 using LT.DigitalOffice.Gateway.Clients.AdminServiceClients;
 using LT.DigitalOffice.Gateway.Clients.AdminServiceClients.Interfaces;
+using LT.DigitalOffice.Gateway.Clients.AuthServiceClients;
+using LT.DigitalOffice.Gateway.Clients.AuthServiceClients.Interfaces;
 using LT.DigitalOffice.Gateway.Clients.EmailServiceClients;
 using LT.DigitalOffice.Gateway.Clients.EmailServiceClients.Interfaces;
 using LT.DigitalOffice.Kernel.Configurations;
@@ -40,10 +42,11 @@ namespace LT.DigitalOffice.Gateway
 
     public void ConfigureServices(IServiceCollection services)
     {
-   //   services.AddTransient<IAdminControllerClient, AdminControllerClient>();
+      services.AddTransient<IAdminControllerClient, AdminControllerClient>();
       services.AddTransient<IGraphicalUserInterfaceControllerClient, GraphicalUserInterfaceControllerClient>();
-     // services.AddTransient<IModuleSettingControllerClient, ModuleSettingControllerClient>();
+      services.AddTransient<IModuleSettingControllerClient, ModuleSettingControllerClient>();
       services.AddTransient<IUnsentEmailController, UnsentEmailController>();
+      services.AddTransient<IAuthControllerClient, AuthControllerClient>();
 
       services.AddCors(options =>
       {
