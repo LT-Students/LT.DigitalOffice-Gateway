@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using LT.DigitalOffice.AdminService.Models.Dto.Models;
+using LT.DigitalOffice.AdminService.Models.Dto.Requests;
 using LT.DigitalOffice.Gateway.Clients.AdminServiceClients.Interfaces;
 using LT.DigitalOffice.Kernel.Enums;
 using LT.DigitalOffice.Kernel.Requests;
@@ -24,7 +25,7 @@ namespace LT.DigitalOffice.Gateway.Clients.AdminServiceClients
       _httpContextAccessor = httpContextAccessor;
       _client = new HttpClient();
 
-      _client.BaseAddress = new Uri("http://localhost:5158/");
+      _client.BaseAddress = new Uri("http://localhost:9801/");
       _client.DefaultRequestHeaders.Accept.Clear();
       _client.DefaultRequestHeaders.Accept.Add(
           new MediaTypeWithQualityHeaderValue("application/json"));
@@ -55,6 +56,25 @@ namespace LT.DigitalOffice.Gateway.Clients.AdminServiceClients
         request.Headers.Add("token", token);
 
         request.Content = JsonContent.Create(servicesIds);
+
+        HttpResponseMessage response = await _client.SendAsync(request);
+
+        result = JsonConvert.DeserializeObject<OperationResultResponse<bool>>(
+          await response.Content.ReadAsStringAsync());
+
+        result.Status = (OperationResultStatusType)response.StatusCode;
+      }
+
+      return result;
+    }
+
+    public async Task<OperationResultResponse<bool>> InstallAsync(InstallAppRequest installRequest)
+    {
+      OperationResultResponse<bool> result = new();
+
+      using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, $"http://localhost:9838/admin/install"))
+      {
+        request.Content = JsonContent.Create(installRequest);
 
         HttpResponseMessage response = await _client.SendAsync(request);
 

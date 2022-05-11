@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using LT.DigitalOffice.AdminService.Models.Dto.Models;
+using LT.DigitalOffice.AdminService.Models.Dto.Requests;
 using LT.DigitalOffice.Gateway.Clients.AdminServiceClients.Interfaces;
 using LT.DigitalOffice.Kernel.Requests;
 using LT.DigitalOffice.Kernel.Responses;
@@ -30,6 +31,12 @@ namespace LT.DigitalOffice.Gateway.Controllers.AdminService
     public async Task<OperationResultResponse<bool>> EditAsync([FromBody] List<Guid> servicesIds)
     {
       return await _client.EditAsync(servicesIds);
+    }
+
+    [HttpPost("install")]
+    public async Task<OperationResultResponse<bool>> InstallAppAsync([FromBody] InstallAppRequest request)
+    {
+      return await _client.InstallAsync(request);
     }
   }
 }

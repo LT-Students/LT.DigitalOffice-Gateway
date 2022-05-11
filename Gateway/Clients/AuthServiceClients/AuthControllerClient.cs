@@ -64,7 +64,6 @@ namespace LT.DigitalOffice.Gateway.Clients.AuthServiceClients
 
         result = JsonConvert.DeserializeObject<LoginResult>(
           await response.Content.ReadAsStringAsync());
-
       }
 
       return result;
