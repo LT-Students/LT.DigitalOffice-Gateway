@@ -19,6 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Admin", "Admin", "{9E407F53
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{DAC682B1-EA2D-4822-946B-E3896F060968}"
 	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		Common.Configurations.targets = Common.Configurations.targets

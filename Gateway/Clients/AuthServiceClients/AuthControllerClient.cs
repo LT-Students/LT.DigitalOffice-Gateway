@@ -21,7 +21,6 @@ namespace LT.DigitalOffice.Gateway.Clients.AuthServiceClients
     {
       _client = new HttpClient();
 
-      _client.BaseAddress = new Uri("http://localhost:9800/");
       _client.DefaultRequestHeaders.Accept.Clear();
       _client.DefaultRequestHeaders.Accept.Add(
           new MediaTypeWithQualityHeaderValue("application/json"));
