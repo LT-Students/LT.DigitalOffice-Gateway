@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using System.Web.Http;
 using LT.DigitalOffice.AdminService.Models.Dto.Models;
 using LT.DigitalOffice.AdminService.Models.Dto.Requests;
 using LT.DigitalOffice.Gateway.Clients.AdminServiceClients.Interfaces;
@@ -42,7 +43,17 @@ namespace LT.DigitalOffice.Gateway.Clients.AdminServiceClients
         HttpResponseMessage response = await _client.SendAsync(requestMessage);
         if (response.StatusCode == HttpStatusCode.Forbidden)
         {
-          throw new ForbiddenException();
+          throw new ForbiddenException(response.Content.ReadAsAsync<HttpError>().Result.Message);
+        }
+
+        if (response.StatusCode == HttpStatusCode.BadRequest)
+        {
+          throw new BadRequestException(response.Content.ReadAsAsync<HttpError>().Result.Message);
+        }
+
+        if (response.StatusCode == HttpStatusCode.NotFound)
+        {
+          throw new NotFoundException(response.Content.ReadAsAsync<HttpError>().Result.Message);
         }
 
         result = JsonConvert.DeserializeObject<OperationResultResponse<bool>>(

@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using System.Web.Http;
 using LT.DigitalOffice.AuthService.Models.Dto.Requests;
 using LT.DigitalOffice.AuthService.Models.Dto.Responses;
 using LT.DigitalOffice.Gateway.Clients.AuthServiceClients.Interfaces;
@@ -37,7 +38,12 @@ namespace LT.DigitalOffice.Gateway.Clients.AuthServiceClients
         HttpResponseMessage response = await _client.SendAsync(request);
         if (response.StatusCode == HttpStatusCode.BadRequest)
         {
-          throw new BadRequestException();
+          throw new BadRequestException(response.Content.ReadAsAsync<HttpError>().Result.Message);
+        }
+
+        if (response.StatusCode == HttpStatusCode.NotFound)
+        {
+          throw new NotFoundException(response.Content.ReadAsAsync<HttpError>().Result.Message);
         }
 
         result = JsonConvert.DeserializeObject<LoginResult>(
@@ -58,7 +64,12 @@ namespace LT.DigitalOffice.Gateway.Clients.AuthServiceClients
         HttpResponseMessage response = await _client.SendAsync(request);
         if (response.StatusCode == HttpStatusCode.BadRequest)
         {
-          throw new BadRequestException();
+          throw new BadRequestException(response.Content.ReadAsAsync<HttpError>().Result.Message);
+        }
+
+        if (response.StatusCode == HttpStatusCode.Forbidden)
+        {
+          throw new ForbiddenException(response.Content.ReadAsAsync<HttpError>().Result.Message);
         }
 
         result = JsonConvert.DeserializeObject<LoginResult>(

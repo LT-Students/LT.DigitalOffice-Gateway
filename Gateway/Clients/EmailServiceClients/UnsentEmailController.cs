@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Web.Http;
 using LT.DigitalOffice.EmailService.Models.Dto.Models;
 using LT.DigitalOffice.Gateway.Clients.EmailServiceClients.Interfaces;
 using LT.DigitalOffice.Kernel.Exceptions.Models;
@@ -41,9 +42,14 @@ namespace LT.DigitalOffice.Gateway.Clients.EmailServiceClients
         }
 
         HttpResponseMessage response = await _client.SendAsync(request);
+        if (response.StatusCode == HttpStatusCode.BadRequest)
+        {
+          throw new BadRequestException(response.Content.ReadAsAsync<HttpError>().Result.Message);
+        }
+
         if (response.StatusCode == HttpStatusCode.Forbidden)
         {
-          throw new ForbiddenException();
+          throw new ForbiddenException(response.Content.ReadAsAsync<HttpError>().Result.Message);
         }
 
         result = JsonConvert.DeserializeObject<FindResultResponse<UnsentEmailInfo>>(
@@ -68,7 +74,7 @@ namespace LT.DigitalOffice.Gateway.Clients.EmailServiceClients
         HttpResponseMessage response = await _client.SendAsync(request);
         if (response.StatusCode == HttpStatusCode.Forbidden)
         {
-          throw new ForbiddenException();
+          throw new ForbiddenException(response.Content.ReadAsAsync<HttpError>().Result.Message);
         }
 
         result = JsonConvert.DeserializeObject<OperationResultResponse<bool>>(
