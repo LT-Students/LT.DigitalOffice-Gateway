@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LT.DigitalOffice.Gateway.Controllers.AdminService
 {
   [ApiController]
-  [Route("{controller}")]
+  [Route("[controller]")]
   public class GraphicalUserInterfaceController : ControllerBase
   {
     private readonly IGraphicalUserInterfaceControllerClient _client;

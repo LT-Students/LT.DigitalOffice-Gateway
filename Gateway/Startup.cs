@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 using System.Text.Json.Serialization;
 using LT.DigitalOffice.Gateway.Clients.AdminServiceClients;
 using LT.DigitalOffice.Gateway.Clients.AdminServiceClients.Interfaces;
@@ -13,6 +15,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
 namespace LT.DigitalOffice.Gateway
 {
@@ -72,10 +75,22 @@ namespace LT.DigitalOffice.Gateway
           options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
         })
         .AddNewtonsoftJson();
+
+      services.AddSwaggerGen(c =>
+      {
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Gateway", Version = "1.0.0.0", });
+      });
     }
 
     public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
     {
+      app.UseSwagger();
+
+      app.UseSwaggerUI(c =>
+      {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Gateway");
+      });
+
       app.UseForwardedHeaders();
 
       app.UseExceptionsHandler(loggerFactory);

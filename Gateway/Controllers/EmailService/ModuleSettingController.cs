@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LT.DigitalOffice.Gateway.Controllers.EmailService
 {
   [ApiController]
-  [Route("{controller}")]
+  [Route("[controller]")]
   public class ModuleSettingController : ControllerBase
   {
     private readonly IModuleSettingControllerClient _client;

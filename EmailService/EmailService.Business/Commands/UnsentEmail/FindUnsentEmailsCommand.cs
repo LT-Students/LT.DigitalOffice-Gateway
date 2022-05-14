@@ -42,7 +42,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.UnsentEmail
 
     public async Task<FindResultResponse<UnsentEmailInfo>> ExecuteAsync(BaseFindFilter filter)
     {
-      if (!await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates))
+      if (!await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailsTemplates))
       {
         return _responseCreator.CreateFailureFindResponse<UnsentEmailInfo>(HttpStatusCode.Forbidden);
       }

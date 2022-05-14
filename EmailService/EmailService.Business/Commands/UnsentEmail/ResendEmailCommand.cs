@@ -29,7 +29,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.UnsentEmail
 
     public async Task<OperationResultResponse<bool>> ExecuteAsync(Guid id)
     {
-      if (!await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates))
+      if (!await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailsTemplates))
       {
         return _responseCreator.CreateFailureResponse<bool>(HttpStatusCode.Forbidden);
       }
