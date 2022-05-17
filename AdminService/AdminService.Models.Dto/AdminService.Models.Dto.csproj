@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(ProjectDir)..\..\Common.Configurations.targets" />
+
+  <ItemGroup>
+    <Compile Remove="Requests\Filters\**" />
+    <Compile Remove="Responses\**" />
+    <EmbeddedResource Remove="Requests\Filters\**" />
+    <EmbeddedResource Remove="Responses\**" />
+    <None Remove="Requests\Filters\**" />
+    <None Remove="Responses\**" />
+  </ItemGroup>
+
+</Project>

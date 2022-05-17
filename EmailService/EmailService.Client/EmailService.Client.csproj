@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(ProjectDir)..\..\Common.Configurations.targets" />
+    
+  <ItemGroup>
+    <ProjectReference Include="..\..\AdminService\AdminService.Models.Dto\AdminService.Models.Dto.csproj" />
+    <ProjectReference Include="..\EmailService.Models.Dto\EmailService.Models.Dto.csproj" />
+  </ItemGroup>
+
+</Project>
