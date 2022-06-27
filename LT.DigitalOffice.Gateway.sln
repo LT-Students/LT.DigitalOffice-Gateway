@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth", "Auth", "{F58DE641-0380-4ABB-885B-50DA6C131EBE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthService", "AuthService", "{F58DE641-0380-4ABB-885B-50DA6C131EBE}"
 	ProjectSection(SolutionItems) = preProject
 		AuthService\AuthService.Configurations.targets = AuthService\AuthService.Configurations.targets
 	EndProjectSection
@@ -18,7 +18,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.Token", "AuthSe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.Validation", "AuthService\AuthService.Validation\AuthService.Validation.csproj", "{038532BB-AFAC-4D28-A776-4BDDD86A7691}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Admin", "Admin", "{9E407F53-A701-4085-AB39-417984ABD455}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AdminService", "AdminService", "{9E407F53-A701-4085-AB39-417984ABD455}"
 	ProjectSection(SolutionItems) = preProject
 		AdminService\AdminService.Configurations.targets = AdminService\AdminService.Configurations.targets
 	EndProjectSection

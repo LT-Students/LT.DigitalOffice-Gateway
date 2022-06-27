@@ -59,8 +59,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.UnsentEmail
       return new()
       {
         Body = repositoryResponse.unsentEmailes?.Select(_unsentEmailMapper.Map).ToList(),
-        TotalCount = repositoryResponse.totalCount,
-        Status = OperationResultStatusType.FullSuccess
+        TotalCount = repositoryResponse.totalCount
       };
     }
   }

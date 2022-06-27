@@ -112,7 +112,6 @@ namespace LT.DigitalOffice.AdminService.Business.Commands.ServiceConfiguration
 
       if (request.ServicesToDisable.Count != countDisabledServices)
       {
-        response.Status = OperationResultStatusType.PartialSuccess;
         response.Errors = new List<string>() { "not all services have been disabled." };
       }
       else
