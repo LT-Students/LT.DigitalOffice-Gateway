@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using LT.DigitalOffice.Kernel.BrokerSupport.Attributes;
 using LT.DigitalOffice.Kernel.BrokerSupport.Configurations;
-using LT.DigitalOffice.Models.Broker.Requests.Company;
+using LT.DigitalOffice.Models.Broker.Requests.Email;
 
 namespace LT.DigitalOffice.EmailService.Models.Dto.Configurations
 {
