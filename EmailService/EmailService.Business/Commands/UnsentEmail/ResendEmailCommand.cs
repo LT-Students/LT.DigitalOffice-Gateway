@@ -38,7 +38,6 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.UnsentEmail
 
       return new()
       {
-        Status = isSuccess ? OperationResultStatusType.FullSuccess : OperationResultStatusType.Failed,
         Body = isSuccess
       };
     }

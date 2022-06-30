@@ -8,12 +8,10 @@ using LT.DigitalOffice.Kernel.BrokerSupport.Configurations;
 using LT.DigitalOffice.Kernel.BrokerSupport.Extensions;
 using LT.DigitalOffice.Kernel.BrokerSupport.Middlewares.Token;
 using LT.DigitalOffice.Kernel.Configurations;
+using LT.DigitalOffice.Kernel.EFSupport.Extensions;
+using LT.DigitalOffice.Kernel.EFSupport.Helpers;
 using LT.DigitalOffice.Kernel.Extensions;
-using LT.DigitalOffice.Kernel.Helpers;
 using LT.DigitalOffice.Kernel.Middlewares.ApiInformation;
-using LT.DigitalOffice.Kernel.RedisSupport.Configurations;
-using LT.DigitalOffice.Kernel.RedisSupport.Helpers;
-using LT.DigitalOffice.Kernel.RedisSupport.Helpers.Interfaces;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -23,7 +21,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using StackExchange.Redis;
 
 namespace LT.DigitalOffice.AdminService
 {
@@ -71,18 +68,6 @@ namespace LT.DigitalOffice.AdminService
           });
       });
 
-      if (int.TryParse(Environment.GetEnvironmentVariable("RedisCacheLiveInMinutes"), out int redisCacheLifeTime))
-      {
-        services.Configure<RedisConfig>(options =>
-        {
-          options.CacheLiveInMinutes = redisCacheLifeTime;
-        });
-      }
-      else
-      {
-        services.Configure<RedisConfig>(Configuration.GetSection(RedisConfig.SectionName));
-      }
-
       services.Configure<TokenConfiguration>(Configuration.GetSection("CheckTokenMiddleware"));
       services.Configure<BaseRabbitMqConfig>(Configuration.GetSection(BaseRabbitMqConfig.SectionName));
       services.Configure<BaseServiceInfoConfig>(Configuration.GetSection(BaseServiceInfoConfig.SectionName));
@@ -96,17 +81,7 @@ namespace LT.DigitalOffice.AdminService
         })
         .AddNewtonsoftJson();
 
-      string connStr = Environment.GetEnvironmentVariable("ConnectionString");
-      if (string.IsNullOrEmpty(connStr))
-      {
-        connStr = Configuration.GetConnectionString("SQLConnectionString");
-
-        Log.Information($"SQL connection string from appsettings.json was used. Value '{PasswordHider.Hide(connStr)}'.");
-      }
-      else
-      {
-        Log.Information($"SQL connection string from environment was used. Value '{PasswordHider.Hide(connStr)}'.");
-      }
+      string connStr = ConnectionStringHandler.Get(Configuration);
 
       services.AddDbContext<AdminServiceDbContext>(options =>
       {
@@ -118,24 +93,6 @@ namespace LT.DigitalOffice.AdminService
         .AddSqlServer(connStr)
         .AddRabbitMqCheck();
 
-      string redisConnStr = Environment.GetEnvironmentVariable("RedisConnectionString");
-      if (string.IsNullOrEmpty(redisConnStr))
-      {
-        redisConnStr = Configuration.GetConnectionString("Redis");
-
-        Log.Information($"Redis connection string from appsettings.json was used. Value '{PasswordHider.Hide(redisConnStr)}'");
-      }
-      else
-      {
-        Log.Information($"Redis connection string from environment was used. Value '{PasswordHider.Hide(redisConnStr)}'");
-      }
-
-      services.AddSingleton<IConnectionMultiplexer>(
-        x => ConnectionMultiplexer.Connect(redisConnStr));
-
-      services.AddTransient<ICacheNotebook, CacheNotebook>();
-      services.AddTransient<IRedisHelper, RedisHelper>();
-
       services.AddBusinessObjects();
 
       ConfigureMassTransit(services);
@@ -143,7 +100,7 @@ namespace LT.DigitalOffice.AdminService
 
     public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
     {
-      UpdateDatabase(app);
+      app.UpdateDatabase<AdminServiceDbContext>();
 
       app.UseForwardedHeaders();
 

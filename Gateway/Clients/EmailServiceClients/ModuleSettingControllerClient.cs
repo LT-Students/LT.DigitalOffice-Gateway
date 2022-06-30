@@ -55,8 +55,6 @@ namespace LT.DigitalOffice.Gateway.Clients.EmailServiceClients
 
         result = JsonConvert.DeserializeObject<OperationResultResponse<bool>>(
           await response.Content.ReadAsStringAsync());
-
-        result.Status = (OperationResultStatusType)response.StatusCode;
       }
 
       return result;

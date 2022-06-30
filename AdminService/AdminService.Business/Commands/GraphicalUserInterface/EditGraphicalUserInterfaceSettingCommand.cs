@@ -53,10 +53,6 @@ public class EditGraphicalUserInterfaceSettingCommand : IEditGraphicalUserInterf
 
     response.Body = await _repository.EditAsync(await _mapper.Map(request));
 
-    response.Status = response.Body
-      ? OperationResultStatusType.FullSuccess
-      : OperationResultStatusType.Failed;
-
     return response;
   }
 }
