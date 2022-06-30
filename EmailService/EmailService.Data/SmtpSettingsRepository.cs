@@ -63,5 +63,10 @@ namespace LT.DigitalOffice.EmailService.Data
     {
       return await _provider.ModuleSettings.FirstOrDefaultAsync();
     }
+
+    public async Task<bool> DoesExistAnyAsync()
+    {
+      return !(_provider.ModuleSettings.FirstAsync() is null);
+    }
   }
 }
