@@ -1,11 +1,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim AS build
 WORKDIR /app
 
-COPY . ./
-RUN dotnet restore -s https://api.nuget.org/v3/index.json
-
-COPY . ./
-RUN dotnet publish -c Release -o out
+COPY ["/EmailService/", "/EmailService/"]
+RUN dotnet publish /EmailService/EmailService/EmailService.csproj -c Release -o out
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-bullseye-slim AS base
 WORKDIR /app

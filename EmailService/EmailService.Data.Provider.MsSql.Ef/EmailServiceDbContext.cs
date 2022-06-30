@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
-using LT.DigitalOffice.Kernel.Database;
-using LT.DigitalOffice.EmailService.Models.Db;
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using LT.DigitalOffice.EmailService.Models.Db;
+using LT.DigitalOffice.Kernel.EFSupport.Provider;
+using Microsoft.EntityFrameworkCore;
 
 namespace LT.DigitalOffice.EmailService.Data.Provider.MsSql.Ef
 {

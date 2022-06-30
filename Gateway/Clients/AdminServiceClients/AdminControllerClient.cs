@@ -71,8 +71,6 @@ namespace LT.DigitalOffice.Gateway.Clients.AdminServiceClients
 
         result = JsonConvert.DeserializeObject<OperationResultResponse<bool>>(
           await response.Content.ReadAsStringAsync());
-
-        result.Status = (OperationResultStatusType)response.StatusCode;
       }
 
       return result;
@@ -94,8 +92,6 @@ namespace LT.DigitalOffice.Gateway.Clients.AdminServiceClients
 
         result = JsonConvert.DeserializeObject<OperationResultResponse<bool>>(
           await response.Content.ReadAsStringAsync());
-
-        result.Status = (OperationResultStatusType)response.StatusCode;
       }
 
       return result;

@@ -46,7 +46,6 @@ namespace LT.DigitalOffice.AdminService.Business.Commands.ServiceConfiguration
 
       return new OperationResultResponse<bool>()
       {
-        Status = difference ? OperationResultStatusType.FullSuccess : OperationResultStatusType.PartialSuccess,
         Body = true,
         Errors = difference ? null : new() { "Request contains incorrect services Ids." }
       };
