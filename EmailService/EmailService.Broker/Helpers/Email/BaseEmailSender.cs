@@ -45,7 +45,7 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
       try
       {
         MailMessage message = new MailMessage(
-        SmtpCredentials.Email,
+        smtpInfo is null ? SmtpCredentials.Email : smtpInfo.Email,
         dbEmail.Receiver)
         {
           Subject = dbEmail.Subject,

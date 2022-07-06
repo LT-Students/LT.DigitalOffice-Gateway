@@ -26,5 +26,12 @@ namespace LT.DigitalOffice.Gateway.Controllers.EmailService
     {
       return await _client.EditAsync(moduleSettingId, patch);
     }
+
+    [HttpPut("check")]
+    public async Task<OperationResultResponse<bool>> CheckAsync(
+      [FromBody] CheckSmtpRequest checkRequest)
+    {
+      return await _client.CheckAsync(checkRequest);
+    }
   }
 }

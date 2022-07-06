@@ -11,5 +11,6 @@ namespace LT.DigitalOffice.Gateway.Clients.EmailServiceClients.Interfaces
   public interface IModuleSettingControllerClient
   {
     Task<OperationResultResponse<bool>> EditAsync(Guid moduleSettingId, JsonPatchDocument<EditModuleSettingRequest> patch);
+    Task<OperationResultResponse<bool>> CheckAsync(CheckSmtpRequest checkRequest);
   }
 }

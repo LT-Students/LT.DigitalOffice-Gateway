@@ -17,7 +17,7 @@ namespace LT.DigitalOffice.EmailService.Data
     public async Task SaveEmailAsync(DbEmail dbEmail)
     {
       _provider.Emails.Add(dbEmail);
-      await _provider.SaveAsync();
+      _provider.SaveAsync();
     }
   }
 }

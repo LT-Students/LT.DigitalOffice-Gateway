@@ -23,7 +23,7 @@ namespace LT.DigitalOffice.EmailService.Data
     public async Task CreateAsync(DbUnsentEmail email)
     {
       _provider.UnsentEmails.Add(email);
-      await _provider.SaveAsync();
+      _provider.SaveAsync();
     }
 
     public async Task<DbUnsentEmail> GetAsync(Guid id)
@@ -60,7 +60,7 @@ namespace LT.DigitalOffice.EmailService.Data
       }
 
       _provider.UnsentEmails.Remove(email);
-      await _provider.SaveAsync();
+      _provider.SaveAsync();
 
       return true;
     }
@@ -69,7 +69,7 @@ namespace LT.DigitalOffice.EmailService.Data
     {
       email.TotalSendingCount++;
       email.LastSendAtUtc = DateTime.UtcNow;
-      await _provider.SaveAsync();
+      _provider.SaveAsync();
     }
   }
 }
