@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using LT.DigitalOffice.EmailService.Data.Interfaces;
 using LT.DigitalOffice.EmailService.Models.Db;
+using LT.DigitalOffice.EmailService.Models.Dto.Models;
 using Microsoft.Extensions.Logging;
 
 namespace LT.DigitalOffice.EmailService.Broker.Helpers
@@ -26,7 +27,8 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
       string receiver,
       string subject,
       string text,
-      Guid? senderId = null)
+      Guid? senderId = null,
+      SmtpInfo smtpInfo = null)
     {
       DbEmail dbEmail = new()
       {
@@ -40,7 +42,7 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
 
       await _emailRepository.SaveEmailAsync(dbEmail);
 
-      if (await SendAsync(dbEmail))
+      if (await SendAsync(dbEmail, smtpInfo))
       {
         return true;
       }

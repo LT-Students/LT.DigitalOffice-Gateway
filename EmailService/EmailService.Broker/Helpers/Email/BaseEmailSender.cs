@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using LT.DigitalOffice.EmailService.Data.Interfaces;
 using LT.DigitalOffice.EmailService.Models.Db;
 using LT.DigitalOffice.EmailService.Models.Dto.Helpers;
+using LT.DigitalOffice.EmailService.Models.Dto.Models;
 using Microsoft.Extensions.Logging;
 
 namespace LT.DigitalOffice.EmailService.Broker.Helpers
@@ -28,22 +29,22 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
 
         return true;
       }
- 
+
       _logger?.LogError("Cannot get smtp credentials.");
 
       return false;
     }
 
-    protected async Task<bool> SendAsync(DbEmail dbEmail)
+    protected async Task<bool> SendAsync(DbEmail dbEmail, SmtpInfo smtpInfo = null)
     {
-      if (!SmtpCredentials.HasValue && !(await GetSmtpCredentialsAsync()))
+      if (smtpInfo is null && !SmtpCredentials.HasValue && !(await GetSmtpCredentialsAsync()))
       {
         return false;
       }
 
       try
       {
-        var message = new MailMessage(
+        MailMessage message = new MailMessage(
         SmtpCredentials.Email,
         dbEmail.Receiver)
         {
@@ -52,13 +53,13 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
         };
 
         SmtpClient smtp = new SmtpClient(
-          SmtpCredentials.Host,
-          SmtpCredentials.Port)
+          smtpInfo is null ? SmtpCredentials.Host : smtpInfo.Host,
+          smtpInfo is null ? SmtpCredentials.Port : smtpInfo.Port)
         {
           Credentials = new NetworkCredential(
-            SmtpCredentials.Email,
-            SmtpCredentials.Password),
-          EnableSsl = SmtpCredentials.EnableSsl
+            smtpInfo is null ? SmtpCredentials.Email : smtpInfo.Email,
+            smtpInfo is null ? SmtpCredentials.Password : smtpInfo.Password),
+          EnableSsl = smtpInfo is null ? SmtpCredentials.EnableSsl : smtpInfo.EnableSsl
         };
 
         smtp.Send(message);

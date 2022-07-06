@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace LT.DigitalOffice.EmailService.Broker.Requests
 {
-  /*public class TextTemplateService : ITextTemplateService
+  public class TextTemplateService : ITextTemplateService
   {
     private readonly IRequestClient<IGetTextTemplateRequest> _rcGetTextTemplate;
     private readonly ILogger<TextTemplateService> _logger;
@@ -41,5 +41,5 @@ namespace LT.DigitalOffice.EmailService.Broker.Requests
         errors,
         _logger);
     }
-  }*/
+  }
 }
