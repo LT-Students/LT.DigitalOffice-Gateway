@@ -20,7 +20,6 @@ using LT.DigitalOffice.Models.Broker.Responses.TextTemplate;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 
-
 namespace LT.DigitalOffice.EmailService.Business.Commands.ModuleSetting
 {
   public class CheckSmtpCommand : ICheckSmtpCommand
@@ -37,8 +36,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ModuleSetting
 
     private int GenerateCode()
     {
-      Random rnd = new Random();
-      return rnd.Next(10000, 100000);
+      return new Random().Next(10000, 100000);
     }
 
     private async Task<bool> SendCodeAsync(string email, string locale, List<string> errors, string code, SmtpInfo smtpInfo)
