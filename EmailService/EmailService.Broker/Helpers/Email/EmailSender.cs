@@ -27,8 +27,7 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
       string receiver,
       string subject,
       string text,
-      Guid? senderId = null,
-      SmtpInfo smtpInfo = null)
+      Guid? senderId = null)
     {
       DbEmail dbEmail = new()
       {
@@ -42,7 +41,7 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
 
       await _emailRepository.SaveEmailAsync(dbEmail);
 
-      if (await SendAsync(dbEmail, smtpInfo))
+      if (await SendAsync(dbEmail))
       {
         return true;
       }
@@ -72,6 +71,43 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
       }
 
       await _unsentEmailRepository.IncrementTotalCountAsync(dbUnsentEmail);
+
+      return false;
+    }
+
+    public async Task<bool> SendCodeAsync(
+      string receiver,
+      string subject,
+      string text,
+      SmtpInfo smtpInfo,
+      Guid? senderId = null)
+    {
+      DbEmail dbEmail = new()
+      {
+        Id = Guid.NewGuid(),
+        SenderId = senderId,
+        Receiver = receiver,
+        Subject = subject,
+        Text = text,
+        CreatedAtUtc = DateTime.UtcNow
+      };
+
+      await _emailRepository.SaveEmailAsync(dbEmail);
+
+      if (await SendWithSmtpAsync(dbEmail, smtpInfo))
+      {
+        return true;
+      }
+
+      await _unsentEmailRepository.CreateAsync(
+        new DbUnsentEmail
+        {
+          Id = Guid.NewGuid(),
+          CreatedAtUtc = dbEmail.CreatedAtUtc,
+          LastSendAtUtc = dbEmail.CreatedAtUtc,
+          EmailId = dbEmail.Id,
+          TotalSendingCount = 1
+        });
 
       return false;
     }

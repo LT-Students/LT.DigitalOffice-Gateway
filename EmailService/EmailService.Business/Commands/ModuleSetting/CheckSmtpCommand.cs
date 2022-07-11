@@ -43,8 +43,7 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ModuleSetting
 
     private async Task<bool> SendCodeAsync(string email, string locale, List<string> errors, string code, SmtpInfo smtpInfo)
     {
-      //TODO change Greeting to SmtpCheck
-      IGetTextTemplateResponse textTemplate = await _textTemplateService.GetAsync(TemplateType.Greeting, locale, errors);
+      IGetTextTemplateResponse textTemplate = await _textTemplateService.GetAsync(TemplateType.SmtpCheck, locale, errors);
 
       if (textTemplate is null)
       {
@@ -52,10 +51,10 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ModuleSetting
       }
 
       string parsedText = _parser.Parse(
-        new Dictionary<string, string> { { "Password", code } },
+        new Dictionary<string, string> { { "Code", code } },
         textTemplate.Text);
 
-      return await _emailSender.SendEmailAsync(receiver: email, subject: textTemplate.Subject, text: parsedText, smtpInfo: smtpInfo);
+      return await _emailSender.SendCodeAsync(receiver: email, subject: textTemplate.Subject, text: parsedText, smtpInfo: smtpInfo);
     }
 
     public CheckSmtpCommand(

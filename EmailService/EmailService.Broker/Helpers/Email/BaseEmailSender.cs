@@ -35,9 +35,9 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
       return false;
     }
 
-    protected async Task<bool> SendAsync(DbEmail dbEmail, SmtpInfo smtpInfo = null)
+    protected async Task<bool> SendAsync(DbEmail dbEmail)
     {
-      if (smtpInfo is null && !SmtpCredentials.HasValue && !(await GetSmtpCredentialsAsync()))
+      if (!SmtpCredentials.HasValue && !(await GetSmtpCredentialsAsync()))
       {
         return false;
       }
@@ -45,7 +45,7 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
       try
       {
         MailMessage message = new MailMessage(
-        smtpInfo is null ? SmtpCredentials.Email : smtpInfo.Email,
+        SmtpCredentials.Email,
         dbEmail.Receiver)
         {
           Subject = dbEmail.Subject,
@@ -53,13 +53,13 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
         };
 
         SmtpClient smtp = new SmtpClient(
-          smtpInfo is null ? SmtpCredentials.Host : smtpInfo.Host,
-          smtpInfo is null ? SmtpCredentials.Port : smtpInfo.Port)
+          SmtpCredentials.Host,
+          SmtpCredentials.Port)
         {
           Credentials = new NetworkCredential(
-            smtpInfo is null ? SmtpCredentials.Email : smtpInfo.Email,
-            smtpInfo is null ? SmtpCredentials.Password : smtpInfo.Password),
-          EnableSsl = smtpInfo is null ? SmtpCredentials.EnableSsl : smtpInfo.EnableSsl
+            SmtpCredentials.Email,
+            SmtpCredentials.Password),
+          EnableSsl = SmtpCredentials.EnableSsl
         };
 
         smtp.Send(message);
@@ -73,7 +73,42 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
 
         return false;
       }
+      return true;
+    }
 
+    protected async Task<bool> SendWithSmtpAsync(DbEmail dbEmail, SmtpInfo smtpInfo)
+    {
+      try
+      {
+        MailMessage message = new MailMessage(
+        smtpInfo.Email,
+        dbEmail.Receiver)
+        {
+          Subject = dbEmail.Subject,
+          Body = dbEmail.Text
+        };
+
+        SmtpClient smtp = new SmtpClient(
+          smtpInfo.Host,
+          smtpInfo.Port)
+        {
+          Credentials = new NetworkCredential(
+            smtpInfo.Email,
+            smtpInfo.Password),
+          EnableSsl = smtpInfo.EnableSsl
+        };
+
+        smtp.Send(message);
+      }
+      catch (Exception exc)
+      {
+        _logger?.LogError(exc,
+          "Errors while sending email with id {emailId} to {to}. Email replaced to resend queue.",
+          dbEmail.Id,
+          dbEmail.Receiver);
+
+        return false;
+      }
       return true;
     }
 
