@@ -20,22 +20,22 @@ namespace LT.DigitalOffice.EmailService.Data
       _provider = provider;
     }
 
-    public async Task CreateAsync(DbUnsentEmail email)
+    public Task CreateAsync(DbUnsentEmail email)
     {
       _provider.UnsentEmails.Add(email);
-      _provider.SaveAsync();
+      return _provider.SaveAsync();
     }
 
-    public async Task<DbUnsentEmail> GetAsync(Guid id)
+    public Task<DbUnsentEmail> GetAsync(Guid id)
     {
-      return await _provider.UnsentEmails
+      return _provider.UnsentEmails
         .Include(x => x.Email)
         .FirstOrDefaultAsync(eu => eu.Id == id);
     }
 
-    public async Task<List<DbUnsentEmail>> GetAllAsync(int totalSendingCountIsLessThen)
+    public Task<List<DbUnsentEmail>> GetAllAsync(int totalSendingCountIsLessThen)
     {
-      return await _provider.UnsentEmails
+      return _provider.UnsentEmails
         .Where(u => u.TotalSendingCount < totalSendingCountIsLessThen)
         .Include(u => u.Email)
         .ToListAsync();
@@ -60,16 +60,16 @@ namespace LT.DigitalOffice.EmailService.Data
       }
 
       _provider.UnsentEmails.Remove(email);
-      _provider.SaveAsync();
+      await _provider.SaveAsync();
 
       return true;
     }
 
-    public async Task IncrementTotalCountAsync(DbUnsentEmail email)
+    public Task IncrementTotalCountAsync(DbUnsentEmail email)
     {
       email.TotalSendingCount++;
       email.LastSendAtUtc = DateTime.UtcNow;
-      _provider.SaveAsync();
+      return _provider.SaveAsync();
     }
   }
 }

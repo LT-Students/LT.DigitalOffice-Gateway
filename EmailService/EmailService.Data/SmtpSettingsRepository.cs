@@ -59,14 +59,14 @@ namespace LT.DigitalOffice.EmailService.Data
       return true;
     }
 
-    public async Task<DbModuleSetting> GetAsync()
+    public Task<DbModuleSetting> GetAsync()
     {
-      return await _provider.ModuleSettings.FirstOrDefaultAsync();
+      return _provider.ModuleSettings.FirstOrDefaultAsync();
     }
 
     public async Task<bool> DoesExistAnyAsync()
     {
-      return _provider.ModuleSettings.FirstAsync() is not null;
+      return await _provider.ModuleSettings.FirstAsync() is not null;
     }
   }
 }
