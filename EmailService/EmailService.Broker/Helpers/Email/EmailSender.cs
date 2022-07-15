@@ -75,7 +75,7 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
       return false;
     }
 
-    public async Task<bool> SendCodeAsync(
+    public async Task<bool> SendSmtpCheckAsync(
       string receiver,
       string subject,
       string text,
