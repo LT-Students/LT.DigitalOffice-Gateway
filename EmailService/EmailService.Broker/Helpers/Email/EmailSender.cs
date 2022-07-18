@@ -92,22 +92,10 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
         CreatedAtUtc = DateTime.UtcNow
       };
 
-      await _emailRepository.SaveEmailAsync(dbEmail);
-
       if (await SendWithSmtpAsync(dbEmail, smtpInfo))
       {
         return true;
       }
-
-      await _unsentEmailRepository.CreateAsync(
-        new DbUnsentEmail
-        {
-          Id = Guid.NewGuid(),
-          CreatedAtUtc = dbEmail.CreatedAtUtc,
-          LastSendAtUtc = dbEmail.CreatedAtUtc,
-          EmailId = dbEmail.Id,
-          TotalSendingCount = 1
-        });
 
       return false;
     }

@@ -68,16 +68,13 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ModuleSetting
         return _responseCreator.CreateFailureResponse<bool>(HttpStatusCode.BadRequest, errors);
       }
 
-      OperationResultResponse<bool> response = new(body:
-        await SendCheckAsync(
+      return await SendCheckAsync(
           email: request.AdminEmail,
           locale: "ru",
           errors: errors,
-          smtpInfo: request.SmtpInfo));
-
-      return response.Body
-        ? response
-        : _responseCreator.CreateFailureResponse<bool>(HttpStatusCode.BadRequest, response.Errors);
+          smtpInfo: request.SmtpInfo)
+        ? new OperationResultResponse<bool>(body: true)
+        : _responseCreator.CreateFailureResponse<bool>(HttpStatusCode.BadRequest, errors);
     }
   }
 }

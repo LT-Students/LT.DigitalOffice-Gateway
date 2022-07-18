@@ -24,13 +24,13 @@ namespace LT.DigitalOffice.EmailService.Broker.Requests
       _logger = logger;
     }
 
-    public async Task<IGetTextTemplateResponse> GetAsync(
+    public Task<IGetTextTemplateResponse> GetAsync(
       TemplateType templateType,
       string locale,
       List<string> errors,
       Guid? endpointId = null)
     {
-      return await RequestHandler.ProcessRequest<IGetTextTemplateRequest, IGetTextTemplateResponse>(
+      return RequestHandler.ProcessRequest<IGetTextTemplateRequest, IGetTextTemplateResponse>(
         _rcGetTextTemplate,
         IGetTextTemplateRequest.CreateObj(
           endpointId: endpointId,

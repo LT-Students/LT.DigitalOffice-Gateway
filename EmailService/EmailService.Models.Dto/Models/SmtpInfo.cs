@@ -6,7 +6,6 @@ namespace LT.DigitalOffice.EmailService.Models.Dto.Models
   {
     [Required]
     public string Host { get; set; }
-    [Required]
     public int Port { get; set; }
     public bool EnableSsl { get; set; }
     [Required]
