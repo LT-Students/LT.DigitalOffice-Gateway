@@ -184,7 +184,7 @@ namespace LT.DigitalOffice.EmailService
         .GetSection(BaseRabbitMqConfig.SectionName)
         .Get<RabbitMqConfig>();
 
-      Version = "1.0.1.0";
+      Version = "1.0.2.0";
       Description = "EmailService, is intended to work with the emails and email templates.";
       StartTime = DateTime.UtcNow;
       ApiName = $"LT Digital Office - {_serviceInfoConfig.Name}";
@@ -234,18 +234,6 @@ namespace LT.DigitalOffice.EmailService
       services.AddMemoryCache();
 
       ConfigureMassTransit(services);
-
-      if (int.TryParse(Environment.GetEnvironmentVariable("MemoryCacheLiveInMinutes"), out int memoryCacheLifetime))
-      {
-        services.Configure<MemoryCacheConfig>(options =>
-        {
-          options.CacheLiveInMinutes = memoryCacheLifetime;
-        });
-      }
-      else
-      {
-        services.Configure<MemoryCacheConfig>(Configuration.GetSection(MemoryCacheConfig.SectionName));
-      }
     }
 
     public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
