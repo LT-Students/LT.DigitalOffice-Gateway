@@ -27,11 +27,10 @@ namespace LT.DigitalOffice.EmailService.Broker.Requests
     public Task<IGetTextTemplateResponse> GetAsync(
       TemplateType templateType,
       string locale,
-      List<string> errors,
+      List<string> errors = null,
       Guid? endpointId = null)
     {
-      return RequestHandler.ProcessRequest<IGetTextTemplateRequest, IGetTextTemplateResponse>(
-        _rcGetTextTemplate,
+      return _rcGetTextTemplate.ProcessRequest<IGetTextTemplateRequest, IGetTextTemplateResponse>(
         IGetTextTemplateRequest.CreateObj(
           endpointId: endpointId,
           templateType: templateType,

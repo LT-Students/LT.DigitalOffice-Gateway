@@ -75,7 +75,7 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
       return false;
     }
 
-    public async Task<bool> SendSmtpCheckAsync(
+    public Task<bool> SendSmtpCheckAsync(
       string receiver,
       string subject,
       string text,
@@ -92,12 +92,7 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
         CreatedAtUtc = DateTime.UtcNow
       };
 
-      if (await SendWithSmtpAsync(dbEmail, smtpInfo))
-      {
-        return true;
-      }
-
-      return false;
+      return SendWithSmtpAsync(dbEmail, smtpInfo);
     }
   }
 }

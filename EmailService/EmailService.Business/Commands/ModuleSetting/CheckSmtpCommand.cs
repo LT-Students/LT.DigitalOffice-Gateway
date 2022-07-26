@@ -30,12 +30,8 @@ namespace LT.DigitalOffice.EmailService.Business.Commands.ModuleSetting
     {
       IGetTextTemplateResponse textTemplate = await _textTemplateService.GetAsync(TemplateType.SmtpCheck, locale, errors);
 
-      if (textTemplate is null)
-      {
-        return false;
-      }
-
-      return await _emailSender.SendSmtpCheckAsync(receiver: email, subject: textTemplate.Subject, text: textTemplate.Text, smtpInfo: smtpInfo);
+      return textTemplate is not null
+        && await _emailSender.SendSmtpCheckAsync(receiver: email, subject: textTemplate.Subject, text: textTemplate.Text, smtpInfo: smtpInfo);
     }
 
     public CheckSmtpCommand(
