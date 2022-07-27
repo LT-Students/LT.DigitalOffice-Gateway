@@ -2,6 +2,7 @@
 using LT.DigitalOffice.Kernel.BrokerSupport.Attributes;
 using LT.DigitalOffice.Kernel.BrokerSupport.Configurations;
 using LT.DigitalOffice.Models.Broker.Requests.Email;
+using LT.DigitalOffice.Models.Broker.Requests.TextTemplate;
 
 namespace LT.DigitalOffice.EmailService.Models.Dto.Configurations
 {
@@ -13,5 +14,9 @@ namespace LT.DigitalOffice.EmailService.Models.Dto.Configurations
 
     [AutoInjectRequest(typeof(IGetSmtpCredentialsRequest))]
     public string GetSmtpCredentialsEndpoint { get; set; }
+
+    //TextTemplate
+    [AutoInjectRequest(typeof(IGetTextTemplateRequest))]
+    public string GetTextTemplateEndpoint { get; set; }
   }
 }

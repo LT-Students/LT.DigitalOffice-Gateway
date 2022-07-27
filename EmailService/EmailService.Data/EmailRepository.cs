@@ -14,10 +14,10 @@ namespace LT.DigitalOffice.EmailService.Data
       _provider = provider;
     }
 
-    public async Task SaveEmailAsync(DbEmail dbEmail)
+    public Task SaveEmailAsync(DbEmail dbEmail)
     {
       _provider.Emails.Add(dbEmail);
-      await _provider.SaveAsync();
+      return _provider.SaveAsync();
     }
   }
 }

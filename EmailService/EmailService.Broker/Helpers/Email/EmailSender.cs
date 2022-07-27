@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using LT.DigitalOffice.EmailService.Data.Interfaces;
 using LT.DigitalOffice.EmailService.Models.Db;
+using LT.DigitalOffice.EmailService.Models.Dto.Models;
 using Microsoft.Extensions.Logging;
 
 namespace LT.DigitalOffice.EmailService.Broker.Helpers
@@ -72,6 +73,26 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
       await _unsentEmailRepository.IncrementTotalCountAsync(dbUnsentEmail);
 
       return false;
+    }
+
+    public Task<bool> SendSmtpCheckAsync(
+      string receiver,
+      string subject,
+      string text,
+      SmtpInfo smtpInfo,
+      Guid? senderId = null)
+    {
+      DbEmail dbEmail = new()
+      {
+        Id = Guid.NewGuid(),
+        SenderId = senderId,
+        Receiver = receiver,
+        Subject = subject,
+        Text = text,
+        CreatedAtUtc = DateTime.UtcNow
+      };
+
+      return SendWithSmtpAsync(dbEmail, smtpInfo);
     }
   }
 }

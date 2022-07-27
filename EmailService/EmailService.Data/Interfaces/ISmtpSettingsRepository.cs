@@ -14,5 +14,7 @@ namespace LT.DigitalOffice.EmailService.Data.Interfaces
     Task<DbModuleSetting> GetAsync();
 
     Task<bool> EditAsync(Guid moduleSettingId, JsonPatchDocument<DbModuleSetting> patch);
+
+    Task<bool> DoesExistAnyAsync();
   }
 }

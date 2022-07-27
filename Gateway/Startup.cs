@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Reflection;
 using System.Text.Json.Serialization;
 using LT.DigitalOffice.Gateway.Clients.AdminServiceClients;
 using LT.DigitalOffice.Gateway.Clients.AdminServiceClients.Interfaces;

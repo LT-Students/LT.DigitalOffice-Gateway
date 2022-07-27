@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using LT.DigitalOffice.EmailService.Models.Dto.Requests.ModuleSetting;
 using LT.DigitalOffice.Gateway.Clients.EmailServiceClients.Interfaces;
-using LT.DigitalOffice.Kernel.Enums;
 using LT.DigitalOffice.Kernel.Exceptions.Models;
 using LT.DigitalOffice.Kernel.Responses;
 using Microsoft.AspNetCore.Http;
@@ -57,6 +56,26 @@ namespace LT.DigitalOffice.Gateway.Clients.EmailServiceClients
           await response.Content.ReadAsStringAsync());
       }
 
+      return result;
+    }
+
+    public async Task<OperationResultResponse<bool>> CheckAsync(CheckSmtpRequest checkRequest)
+    {
+      OperationResultResponse<bool> result = new();
+
+      using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, $"http://localhost:9826/modulesetting/check"))
+      {
+        request.Content = JsonContent.Create(checkRequest);
+
+        HttpResponseMessage response = await _client.SendAsync(request);
+
+        if (response.StatusCode == HttpStatusCode.BadRequest)
+        {
+          throw new BadRequestException(response.Content.ReadAsAsync<HttpError>().Result.Message);
+        }
+        result = JsonConvert.DeserializeObject<OperationResultResponse<bool>>(
+          await response.Content.ReadAsStringAsync());
+      }
       return result;
     }
   }

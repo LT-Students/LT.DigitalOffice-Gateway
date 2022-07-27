@@ -20,5 +20,13 @@ namespace LT.DigitalOffice.EmailService.Controllers
     {
       return await command.ExecuteAsync(moduleSettingId, patch);
     }
+
+   [HttpPut("check")]
+    public async Task<OperationResultResponse<bool>> CheckAsync(
+      [FromServices] ICheckSmtpCommand command,
+      [FromBody] CheckSmtpRequest request)
+    {
+      return await command.ExecuteAsync(request);
+    }
   }
 }

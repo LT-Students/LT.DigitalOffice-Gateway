@@ -18,7 +18,6 @@ using LT.DigitalOffice.Kernel.Configurations;
 using LT.DigitalOffice.Kernel.EFSupport.Extensions;
 using LT.DigitalOffice.Kernel.EFSupport.Helpers;
 using LT.DigitalOffice.Kernel.Extensions;
-using LT.DigitalOffice.Kernel.Helpers;
 using LT.DigitalOffice.Kernel.Middlewares.ApiInformation;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
@@ -103,17 +102,6 @@ namespace LT.DigitalOffice.EmailService
       services.AddMassTransitHostedService();
     }
 
-    private void UpdateDatabase(IApplicationBuilder app)
-    {
-      using var serviceScope = app.ApplicationServices
-        .GetRequiredService<IServiceScopeFactory>()
-        .CreateScope();
-
-      using var context = serviceScope.ServiceProvider.GetService<EmailServiceDbContext>();
-
-      context.Database.Migrate();
-    }
-
     private void StartResender(IApplicationBuilder app)
     {
       EmailEngineConfig emailEngineConfig = Configuration
@@ -129,7 +117,7 @@ namespace LT.DigitalOffice.EmailService
 
       ILoggerFactory loggerFactory = scope.ServiceProvider.GetRequiredService<ILoggerFactory>();
       ILogger<EmailResender> logger = loggerFactory.CreateLogger<EmailResender>();
-       
+
       var resender = new EmailResender(repository, logger, getSmtpCredentials);
 
       if (!int.TryParse(Environment.GetEnvironmentVariable("MaxResendingCount"), out int maxResendingCount))
@@ -196,7 +184,7 @@ namespace LT.DigitalOffice.EmailService
         .GetSection(BaseRabbitMqConfig.SectionName)
         .Get<RabbitMqConfig>();
 
-      Version = "1.0.1.0";
+      Version = "1.0.2.0";
       Description = "EmailService, is intended to work with the emails and email templates.";
       StartTime = DateTime.UtcNow;
       ApiName = $"LT Digital Office - {_serviceInfoConfig.Name}";
@@ -216,7 +204,7 @@ namespace LT.DigitalOffice.EmailService
               .AllowAnyMethod();
           });
       });
-      
+
       services.Configure<TokenConfiguration>(Configuration.GetSection("CheckTokenMiddleware"));
       services.Configure<BaseRabbitMqConfig>(Configuration.GetSection(BaseRabbitMqConfig.SectionName));
       services.Configure<BaseServiceInfoConfig>(Configuration.GetSection(BaseServiceInfoConfig.SectionName));

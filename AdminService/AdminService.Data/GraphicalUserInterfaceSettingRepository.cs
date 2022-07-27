@@ -54,9 +54,9 @@ public class GraphicalUserInterfaceSettingRepository : IGraphicalUserInterfaceSe
     return true;
   }
 
-  public async Task<DbGraphicalUserInterfaceSetting> GetAsync()
+  public Task<DbGraphicalUserInterfaceSetting> GetAsync()
   {
-    return await _provider
+    return _provider
       .GraphicalUserInterfaceSettings.FirstOrDefaultAsync();
   }
 }
