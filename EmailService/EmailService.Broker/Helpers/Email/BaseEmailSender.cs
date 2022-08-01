@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using LT.DigitalOffice.EmailService.Data.Interfaces;
 using LT.DigitalOffice.EmailService.Models.Db;
 using LT.DigitalOffice.EmailService.Models.Dto.Helpers;
+using LT.DigitalOffice.EmailService.Models.Dto.Models;
 using Microsoft.Extensions.Logging;
 
 namespace LT.DigitalOffice.EmailService.Broker.Helpers
@@ -28,7 +29,7 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
 
         return true;
       }
- 
+
       _logger?.LogError("Cannot get smtp credentials.");
 
       return false;
@@ -43,7 +44,7 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
 
       try
       {
-        var message = new MailMessage(
+        MailMessage message = new MailMessage(
         SmtpCredentials.Email,
         dbEmail.Receiver)
         {
@@ -72,7 +73,42 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
 
         return false;
       }
+      return true;
+    }
 
+    protected async Task<bool> SendWithSmtpAsync(DbEmail dbEmail, SmtpInfo smtpInfo)
+    {
+      try
+      {
+        MailMessage message = new MailMessage(
+        smtpInfo.Email,
+        dbEmail.Receiver)
+        {
+          Subject = dbEmail.Subject,
+          Body = dbEmail.Text
+        };
+
+        SmtpClient smtp = new SmtpClient(
+          smtpInfo.Host,
+          smtpInfo.Port)
+        {
+          Credentials = new NetworkCredential(
+            smtpInfo.Email,
+            smtpInfo.Password),
+          EnableSsl = smtpInfo.EnableSsl
+        };
+
+        smtp.Send(message);
+      }
+      catch (Exception exc)
+      {
+        _logger?.LogError(exc,
+          "Errors while sending email with id {emailId} to {to}. Email replaced to resend queue.",
+          dbEmail.Id,
+          dbEmail.Receiver);
+
+        return false;
+      }
       return true;
     }
 

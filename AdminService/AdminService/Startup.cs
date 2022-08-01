@@ -184,17 +184,6 @@ namespace LT.DigitalOffice.AdminService
       services.AddMassTransitHostedService();
     }
 
-    private void UpdateDatabase(IApplicationBuilder app)
-    {
-      using var serviceScope = app.ApplicationServices
-        .GetRequiredService<IServiceScopeFactory>()
-        .CreateScope();
-
-      using var context = serviceScope.ServiceProvider.GetService<AdminServiceDbContext>();
-
-      context.Database.Migrate();
-    }
-
     #endregion
   }
 }
