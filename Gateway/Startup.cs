@@ -33,7 +33,7 @@ namespace LT.DigitalOffice.Gateway
         .GetSection(BaseServiceInfoConfig.SectionName)
         .Get<BaseServiceInfoConfig>();
 
-      Version = "1.0.1.0";
+      Version = "1.0.0.0";
       Description = "Gateway is a pattern for a single entry point to the program.";
       StartTime = DateTime.UtcNow;
       ApiName = $"LT Digital Office - {_serviceInfoConfig.Name}";
@@ -76,7 +76,7 @@ namespace LT.DigitalOffice.Gateway
 
       services.AddSwaggerGen(c =>
       {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Gateway", Version = "1.0.1.0", });
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Gateway", Version = "1.0.0.0", });
       });
     }
 
