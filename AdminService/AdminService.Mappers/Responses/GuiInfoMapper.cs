@@ -22,6 +22,11 @@ namespace LT.DigitalOffice.AdminService.Mappers.Responses
           Content = dbGui.LogoContent,
           Extension = dbGui.LogoExtension
         },
+        Favicon = new ImageConsist
+        {
+          Content = dbGui.FaviconContent,
+          Extension = dbGui.FaviconExtension
+        },
         SiteUrl = dbGui.SiteUrl
       };
     }

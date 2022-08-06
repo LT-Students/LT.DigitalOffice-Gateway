@@ -30,7 +30,8 @@ public class EditGraphicalUserInterfaceSettingRequestValidator
       {
         nameof(EditGraphicalUserInterfaceSettingRequest.PortalName),
         nameof(EditGraphicalUserInterfaceSettingRequest.SiteUrl),
-        nameof(EditGraphicalUserInterfaceSettingRequest.Logo)
+        nameof(EditGraphicalUserInterfaceSettingRequest.Logo),
+        nameof(EditGraphicalUserInterfaceSettingRequest.Favicon)
       });
 
     AddСorrectOperations(
@@ -43,6 +44,10 @@ public class EditGraphicalUserInterfaceSettingRequestValidator
 
     AddСorrectOperations(
       nameof(EditGraphicalUserInterfaceSettingRequest.Logo),
+      new List<OperationType> { OperationType.Replace });
+
+    AddСorrectOperations(
+      nameof(EditGraphicalUserInterfaceSettingRequest.Favicon),
       new List<OperationType> { OperationType.Replace });
 
     #endregion
@@ -59,7 +64,7 @@ public class EditGraphicalUserInterfaceSettingRequestValidator
 
     #endregion
 
-    #region Image
+    #region Logo
 
     AddFailureForPropertyIf(
       nameof(EditGraphicalUserInterfaceSettingRequest.Logo),
@@ -68,14 +73,36 @@ public class EditGraphicalUserInterfaceSettingRequestValidator
       {
         { x =>
           {
-            ImageConsist image = JsonConvert.DeserializeObject<ImageConsist>(x.value?.ToString());
+            ImageConsist logo = JsonConvert.DeserializeObject<ImageConsist>(x.value?.ToString());
 
-            return image is null
+            return logo is null
               ? true
-              : _imageContentValidator.Validate(image.Content).IsValid &&
-                _imageExtensionValidator.Validate(image.Extension).IsValid;
+              : _imageContentValidator.Validate(logo.Content).IsValid &&
+                _imageExtensionValidator.Validate(logo.Extension).IsValid;
           },
-          "Wrong image type." },
+          "Wrong logo type." },
+      });
+
+    #endregion
+
+    #region Favicon
+
+    // TO DO: when there will be desigion about favicon's extension and size, fix validation according this desigion
+    AddFailureForPropertyIf(
+      nameof(EditGraphicalUserInterfaceSettingRequest.Favicon),
+      x => x == OperationType.Replace,
+      new Dictionary<Func<Operation<EditGraphicalUserInterfaceSettingRequest>, bool>, string>
+      {
+        { x =>
+          {
+            ImageConsist icon = JsonConvert.DeserializeObject<ImageConsist>(x.value?.ToString());
+
+            return icon is null
+              ? true
+              : _imageContentValidator.Validate(icon.Content).IsValid &&
+                _imageExtensionValidator.Validate(icon.Extension).IsValid;
+          },
+          "Wrong favicon type." },
       });
 
     #endregion

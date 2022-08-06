@@ -127,6 +127,16 @@ namespace LT.DigitalOffice.AdminService.Validation
             RuleFor(r => r.GuiInfo.Logo.Extension)
               .SetValidator(imageExtensionValidator);
           });
+
+          // TO DO: when there will be desigion about favicon's extension and size, fix validation according this desigion
+          When(r => r.GuiInfo.Favicon is not null, () =>
+          {
+            RuleFor(r => r.GuiInfo.Favicon.Content)
+              .SetValidator(imageContentValidator);
+
+            RuleFor(r => r.GuiInfo.Favicon.Extension)
+              .SetValidator(imageExtensionValidator);
+          });
         });
 
       RuleFor(request => request.ServicesToDisable)

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LT.DigitalOffice.AdminService.Data.Provider.MsSql.Ef.Migrations
 {
   [DbContext(typeof(AdminServiceDbContext))]
-  [Migration("20211123223000_InitialTable")]
+  [Migration("20220802161500_InitialTable")]
   public class InitialTable : Migration
   {
     protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,6 +19,8 @@ namespace LT.DigitalOffice.AdminService.Data.Provider.MsSql.Ef.Migrations
           PortalName = table.Column<string>(nullable: true),
           LogoContent = table.Column<string>(nullable: true),
           LogoExtension = table.Column<string>(nullable: true),
+          FaviconContent = table.Column<string>(nullable: true),
+          FaviconExtension = table.Column<string>(nullable: true),
           SiteUrl = table.Column<string>(nullable: false),
           CreatedAtUtc = table.Column<DateTime>(nullable: false),
           ModifiedBy = table.Column<Guid>(nullable: true),

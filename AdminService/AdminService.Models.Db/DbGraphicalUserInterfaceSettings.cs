@@ -10,6 +10,8 @@ namespace LT.DigitalOffice.AdminService.Models.Db
     public string PortalName { get; set; }
     public string LogoContent { get; set; }
     public string LogoExtension { get; set; }
+    public string FaviconContent { get; set; }
+    public string FaviconExtension { get; set; }
     public string SiteUrl { get; set; }
     public DateTime CreatedAtUtc { get; set; }
     public Guid? ModifiedBy { get; set; }

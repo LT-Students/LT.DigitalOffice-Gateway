@@ -20,6 +20,8 @@ namespace LT.DigitalOffice.AdminService.Mappers.Db
         PortalName = request.PortalName,
         LogoContent = request.Logo?.Content,
         LogoExtension = request.Logo?.Extension,
+        FaviconContent = request.Favicon?.Content,
+        FaviconExtension = request.Favicon?.Extension,
         SiteUrl = request.SiteUrl,
         CreatedAtUtc = DateTime.UtcNow
       };
