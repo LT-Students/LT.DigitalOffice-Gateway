@@ -135,7 +135,8 @@ namespace LT.DigitalOffice.AdminService.Validation
               .SetValidator(imageContentValidator);
 
             RuleFor(r => r.GuiInfo.Favicon.Extension)
-              .SetValidator(imageExtensionValidator);
+              .Must(x => x == ".png" || x == ".svg" || x == ".ico")
+              .WithMessage("Wrong favicon extension");
           });
         });
 

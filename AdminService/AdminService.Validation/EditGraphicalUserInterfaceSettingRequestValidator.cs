@@ -100,7 +100,7 @@ public class EditGraphicalUserInterfaceSettingRequestValidator
             return icon is null
               ? true
               : _imageContentValidator.Validate(icon.Content).IsValid &&
-                _imageExtensionValidator.Validate(icon.Extension).IsValid;
+                (icon.Extension == ".png" || icon.Extension == ".svg" || icon.Extension == ".ico");
           },
           "Wrong favicon type." },
       });

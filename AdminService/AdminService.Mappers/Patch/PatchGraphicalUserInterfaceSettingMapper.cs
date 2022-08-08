@@ -38,6 +38,8 @@ public class PatchGraphicalUserInterfaceSettingMapper : IPatchGraphicalUserInter
         (bool _, string resizedContent, string extension) = await _resizeHelper.ResizeAsync(
           logo.Content, logo.Extension);
 
+        resizedContent ??= logo.Content;
+
         dbPatch.Operations.Add(new Operation<DbGraphicalUserInterfaceSetting>(
           item.op, nameof(DbGraphicalUserInterfaceSetting.LogoContent), item.from, resizedContent));
 
@@ -47,13 +49,15 @@ public class PatchGraphicalUserInterfaceSettingMapper : IPatchGraphicalUserInter
         continue;
       }
 
-      // TO DO: when there will be desigion about favicon's extension and size, fix mapper according this desigion
+      // TO DO: when there will be desigion about favicon's extension and size, fix mapper according this desigion + may be add resize method for .ico
       if (item.path.EndsWith(nameof(EditGraphicalUserInterfaceSettingRequest.Favicon)))
       {
         ImageConsist icon = JsonConvert.DeserializeObject<ImageConsist>(item.value.ToString());
 
         (bool _, string resizedContent, string extension) = await _resizeHelper.ResizeAsync(
           icon.Content, icon.Extension);
+
+        resizedContent ??= icon.Content;
 
         dbPatch.Operations.Add(new Operation<DbGraphicalUserInterfaceSetting>(
           item.op, nameof(DbGraphicalUserInterfaceSetting.FaviconContent), item.from, resizedContent));
