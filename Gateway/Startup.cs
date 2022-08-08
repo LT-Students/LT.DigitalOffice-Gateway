@@ -6,6 +6,8 @@ using LT.DigitalOffice.Gateway.Clients.AuthServiceClients;
 using LT.DigitalOffice.Gateway.Clients.AuthServiceClients.Interfaces;
 using LT.DigitalOffice.Gateway.Clients.EmailServiceClients;
 using LT.DigitalOffice.Gateway.Clients.EmailServiceClients.Interfaces;
+using LT.DigitalOffice.Gateway.Clients.FeedbackServiceClients;
+using LT.DigitalOffice.Gateway.Clients.FeedbackServiceClients.Interfaces;
 using LT.DigitalOffice.Kernel.Configurations;
 using LT.DigitalOffice.Kernel.Extensions;
 using LT.DigitalOffice.Kernel.Middlewares.ApiInformation;
@@ -48,6 +50,7 @@ namespace LT.DigitalOffice.Gateway
       services.AddTransient<IModuleSettingControllerClient, ModuleSettingControllerClient>();
       services.AddTransient<IUnsentEmailController, UnsentEmailController>();
       services.AddTransient<IAuthControllerClient, AuthControllerClient>();
+      services.AddTransient<IFeedbackControllerClient, FeedbackControllerClient>();
 
       services.AddCors(options =>
       {
