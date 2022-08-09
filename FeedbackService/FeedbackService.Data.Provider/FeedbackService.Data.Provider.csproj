@@ -1,9 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-    <Import Project="$(ProjectDir)..\FeedbackService.Configurations.targets" />
-
-	<ItemGroup>
-		<ProjectReference Include="..\FeedbackService.Models.Db\FeedbackService.Models.Db.csproj" />
-	</ItemGroup>
-
-</Project>

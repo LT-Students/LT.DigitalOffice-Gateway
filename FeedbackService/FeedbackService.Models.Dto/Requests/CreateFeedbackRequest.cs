@@ -1,7 +1,7 @@
-﻿using LT.DigitalOffice.FeedbackService.Models.Dto.Enums;
-using LT.DigitalOffice.FeedbackService.Models.Dto.Models;
+﻿using LT.DigitalOffice.FeedbackService.Models.Dto.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using LT.DigitalOffice.FeedbackService.Models.Dto.Enums;
 
 namespace LT.DigitalOffice.FeedbackService.Models.Dto.Requests
 {

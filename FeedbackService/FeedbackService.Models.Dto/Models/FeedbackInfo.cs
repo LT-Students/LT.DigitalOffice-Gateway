@@ -1,5 +1,5 @@
-﻿using LT.DigitalOffice.FeedbackService.Models.Dto.Enums;
-using System;
+﻿using System;
+using LT.DigitalOffice.FeedbackService.Models.Dto.Enums;
 
 namespace LT.DigitalOffice.FeedbackService.Models.Dto.Models
 {
