@@ -33,16 +33,37 @@ public class PatchGraphicalUserInterfaceSettingMapper : IPatchGraphicalUserInter
     {
       if (item.path.EndsWith(nameof(EditGraphicalUserInterfaceSettingRequest.Logo)))
       {
-        ImageConsist image = JsonConvert.DeserializeObject<ImageConsist>(item.value.ToString());
+        ImageConsist logo = JsonConvert.DeserializeObject<ImageConsist>(item.value.ToString());
 
         (bool _, string resizedContent, string extension) = await _resizeHelper.ResizeAsync(
-          image.Content, image.Extension);
+          logo.Content, logo.Extension);
+
+        resizedContent ??= logo.Content;
 
         dbPatch.Operations.Add(new Operation<DbGraphicalUserInterfaceSetting>(
           item.op, nameof(DbGraphicalUserInterfaceSetting.LogoContent), item.from, resizedContent));
 
         dbPatch.Operations.Add(new Operation<DbGraphicalUserInterfaceSetting>(
           item.op, nameof(DbGraphicalUserInterfaceSetting.LogoExtension), item.from, extension));
+
+        continue;
+      }
+
+      // TO DO: when there will be desigion about favicon's extension and size, fix mapper according this desigion + may be add resize method for .ico
+      if (item.path.EndsWith(nameof(EditGraphicalUserInterfaceSettingRequest.Favicon)))
+      {
+        ImageConsist icon = JsonConvert.DeserializeObject<ImageConsist>(item.value.ToString());
+
+        (bool _, string resizedContent, string extension) = await _resizeHelper.ResizeAsync(
+          icon.Content, icon.Extension);
+
+        resizedContent ??= icon.Content;
+
+        dbPatch.Operations.Add(new Operation<DbGraphicalUserInterfaceSetting>(
+          item.op, nameof(DbGraphicalUserInterfaceSetting.FaviconContent), item.from, resizedContent));
+
+        dbPatch.Operations.Add(new Operation<DbGraphicalUserInterfaceSetting>(
+          item.op, nameof(DbGraphicalUserInterfaceSetting.FaviconExtension), item.from, extension));
 
         continue;
       }
