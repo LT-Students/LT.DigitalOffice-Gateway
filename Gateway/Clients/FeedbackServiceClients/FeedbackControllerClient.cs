@@ -17,8 +17,9 @@ namespace LT.DigitalOffice.Gateway.Clients.FeedbackServiceClients
     private readonly HttpClient _client;
     private readonly IResponseCreator _responseCreator;
 
-    public FeedbackControllerClient()
+    public FeedbackControllerClient(IResponseCreator responseCreator)
     {
+      _responseCreator = responseCreator;
 
       _client = new HttpClient();
       _client.DefaultRequestHeaders.Accept.Clear();
