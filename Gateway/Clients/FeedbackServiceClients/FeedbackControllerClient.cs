@@ -4,9 +4,10 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using System.Web.Http;
 using LT.DigitalOffice.FeedbackService.Models.Dto.Requests;
 using LT.DigitalOffice.Gateway.Clients.FeedbackServiceClients.Interfaces;
-using LT.DigitalOffice.Kernel.Helpers.Interfaces;
+using LT.DigitalOffice.Kernel.Exceptions.Models;
 using LT.DigitalOffice.Kernel.Responses;
 using Newtonsoft.Json;
 
@@ -15,12 +16,9 @@ namespace LT.DigitalOffice.Gateway.Clients.FeedbackServiceClients
   public class FeedbackControllerClient : IFeedbackControllerClient
   {
     private readonly HttpClient _client;
-    private readonly IResponseCreator _responseCreator;
 
-    public FeedbackControllerClient(IResponseCreator responseCreator)
+    public FeedbackControllerClient()
     {
-      _responseCreator = responseCreator;
-
       _client = new HttpClient();
       _client.DefaultRequestHeaders.Accept.Clear();
       _client.DefaultRequestHeaders.Accept.Add(
@@ -37,9 +35,19 @@ namespace LT.DigitalOffice.Gateway.Clients.FeedbackServiceClients
 
         HttpResponseMessage response = await _client.SendAsync(message);
 
-        if (response.StatusCode != HttpStatusCode.Created)
+        if (response.StatusCode == HttpStatusCode.Forbidden)
         {
-          _responseCreator.CreateFailureResponse<Guid?>(response.StatusCode);
+          throw new ForbiddenException(response.Content.ReadAsAsync<HttpError>().Result.Message);
+        }
+
+        if (response.StatusCode == HttpStatusCode.BadRequest)
+        {
+          throw new BadRequestException(response.Content.ReadAsAsync<HttpError>().Result.Message);
+        }
+
+        if (response.StatusCode == HttpStatusCode.InternalServerError)
+        {
+          throw new InternalServerException(response.Content.ReadAsAsync<HttpError>().Result.Message);
         }
 
         result = JsonConvert.DeserializeObject<OperationResultResponse<Guid?>>(
