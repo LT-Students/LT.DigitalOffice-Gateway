@@ -34,7 +34,7 @@ namespace LT.DigitalOffice.Gateway.Clients.EmailServiceClients
       FindResultResponse<UnsentEmailInfo> result = new();
       string token = _httpContextAccessor.HttpContext.Request.Headers["token"];
 
-      using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:9826/UnsentEmail/find?takecount={filter.TakeCount}&skipcount={filter.SkipCount}"))
+      using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, $"https://email.dev.ltdo.xyz/UnsentEmail/find?takecount={filter.TakeCount}&skipcount={filter.SkipCount}"))
       {
         if (!string.IsNullOrEmpty(token))
         {
@@ -64,7 +64,7 @@ namespace LT.DigitalOffice.Gateway.Clients.EmailServiceClients
       OperationResultResponse<bool> result = new();
       string token = _httpContextAccessor.HttpContext.Request.Headers["token"];
 
-      using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, $"http://localhost:9826/UnsentEmail/resend?unsentEmailId={unsentEmailId}"))
+      using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, $"https://email.dev.ltdo.xyz/UnsentEmail/resend?unsentEmailId={unsentEmailId}"))
       {
         if (!string.IsNullOrEmpty(token))
         {

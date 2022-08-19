@@ -35,7 +35,7 @@ namespace LT.DigitalOffice.Gateway.Clients.AdminServiceClients
     {
       OperationResultResponse<bool> result = new();
 
-      using (HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Patch, $"http://localhost:9838/GraphicalUserInterface/edit"))
+      using (HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Patch, $"https://admin.dev.ltdo.xyz/GraphicalUserInterface/edit"))
       {
         requestMessage.Content = JsonContent.Create(request);
 
@@ -67,7 +67,7 @@ namespace LT.DigitalOffice.Gateway.Clients.AdminServiceClients
     {
       OperationResultResponse<GuiInfo> result = new();
 
-      using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:9838/GraphicalUserInterface/get"))
+      using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, $"https://admin.dev.ltdo.xyz/GraphicalUserInterface/get"))
       {
         HttpResponseMessage response = await _client.SendAsync(request);
 

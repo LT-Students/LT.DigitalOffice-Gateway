@@ -31,7 +31,7 @@ namespace LT.DigitalOffice.Gateway.Clients.AuthServiceClients
     {
       LoginResult result = new();
 
-      using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, $"http://localhost:9818/Auth/login"))
+      using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, $"https://auth.dev.ltdo.xyz/Auth/login"))
       {
         request.Content = JsonContent.Create(userCredentials);
 
@@ -57,7 +57,7 @@ namespace LT.DigitalOffice.Gateway.Clients.AuthServiceClients
     {
       LoginResult result = new();
 
-      using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, $"http://localhost:9818/Auth/refresh"))
+      using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, $"https://auth.dev.ltdo.xyz/Auth/refresh"))
       {
         request.Content = JsonContent.Create(refreshToken);
 

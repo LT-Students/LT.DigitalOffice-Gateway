@@ -15,5 +15,6 @@ namespace LT.DigitalOffice.FeedbackService.Models.Dto.Requests
 
     [Required]
     public List<ImageContent> FeedbackImages { get; set; }
+    public UserData User { get; set; } = null;
   }
 }

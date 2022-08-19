@@ -9,7 +9,6 @@ using System.Web.Http;
 using LT.DigitalOffice.AdminService.Models.Dto.Models;
 using LT.DigitalOffice.AdminService.Models.Dto.Requests;
 using LT.DigitalOffice.Gateway.Clients.AdminServiceClients.Interfaces;
-using LT.DigitalOffice.Kernel.Enums;
 using LT.DigitalOffice.Kernel.Exceptions.Models;
 using LT.DigitalOffice.Kernel.Requests;
 using LT.DigitalOffice.Kernel.Responses;
@@ -35,7 +34,7 @@ namespace LT.DigitalOffice.Gateway.Clients.AdminServiceClients
     {
       FindResultResponse<ServiceConfigurationInfo> result = new();
 
-      using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:9838/admin/find?takecount={filter.TakeCount}&skipcount={filter.SkipCount}"))
+      using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, $"https://admin.dev.ltdo.xyz/admin/find?takecount={filter.TakeCount}&skipcount={filter.SkipCount}"))
       {
         HttpResponseMessage response = await _client.SendAsync(request);
         if (response.StatusCode == HttpStatusCode.BadRequest)
@@ -54,7 +53,7 @@ namespace LT.DigitalOffice.Gateway.Clients.AdminServiceClients
     {
       OperationResultResponse<bool> result = new();
 
-      using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, $"http://localhost:9838/admin/edit"))
+      using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, $"https://admin.dev.ltdo.xyz/admin/edit"))
       {
         request.Content = JsonContent.Create(servicesIds);
 
@@ -80,7 +79,7 @@ namespace LT.DigitalOffice.Gateway.Clients.AdminServiceClients
     {
       OperationResultResponse<bool> result = new();
 
-      using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, $"http://localhost:9838/admin/install"))
+      using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, $"https://admin.dev.ltdo.xyz/admin/install"))
       {
         request.Content = JsonContent.Create(installRequest);
 
