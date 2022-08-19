@@ -15,5 +15,15 @@ namespace LT.DigitalOffice.FeedbackService.Models.Dto.Models
     public string LastName { get; }
 
     public bool IsActive { get; }
+
+    public UserData(Guid id, Guid? imageId, string firstName, string middleName, string lastName, bool isActive)
+    {
+      Id = id;
+      ImageId = imageId;
+      FirstName = firstName;
+      MiddleName = middleName;
+      LastName = lastName;
+      IsActive = isActive;
+    }
   }
 }

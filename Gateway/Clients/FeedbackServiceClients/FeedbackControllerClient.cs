@@ -34,7 +34,7 @@ namespace LT.DigitalOffice.Gateway.Clients.FeedbackServiceClients
       OperationResultResponse<UserData> userResult = new();
       string token = _httpContextAccessor.HttpContext.Request.Headers["token"];
 
-      using (HttpRequestMessage userRequest = new HttpRequestMessage(HttpMethod.Get, $"https://user.dev.ltdo.xyz/user/getinfo"))
+      using (HttpRequestMessage userRequest = new HttpRequestMessage(HttpMethod.Get, $"https://feedback.dev.ltdo.xyz/user/getinfo"))
       {
         if (!string.IsNullOrEmpty(token))
         {
@@ -42,19 +42,15 @@ namespace LT.DigitalOffice.Gateway.Clients.FeedbackServiceClients
         }
 
         HttpResponseMessage response = await _client.SendAsync(userRequest);
+
         if (response.StatusCode == HttpStatusCode.Unauthorized)
         {
           throw new UnauthorizedException(response.Content.ReadAsAsync<HttpError>().Result.Message);
         }
 
-        if (response.StatusCode == HttpStatusCode.BadRequest)
+        if (response.StatusCode == HttpStatusCode.InternalServerError)
         {
-          throw new BadRequestException(response.Content.ReadAsAsync<HttpError>().Result.Message);
-        }
-
-        if (response.StatusCode == HttpStatusCode.Forbidden)
-        {
-          throw new ForbiddenException(response.Content.ReadAsAsync<HttpError>().Result.Message);
+          throw new InternalServerException(response.Content.ReadAsAsync<HttpError>().Result.Message);
         }
 
         userResult = JsonConvert.DeserializeObject<OperationResultResponse<UserData>>(
