@@ -34,7 +34,7 @@ namespace LT.DigitalOffice.Gateway.Clients.FeedbackServiceClients
       OperationResultResponse<UserData> userResult = new();
       string token = _httpContextAccessor.HttpContext.Request.Headers["token"];
 
-      using (HttpRequestMessage userRequest = new HttpRequestMessage(HttpMethod.Get, $"https://feedback.dev.ltdo.xyz/user/getinfo"))
+      using (HttpRequestMessage userRequest = new HttpRequestMessage(HttpMethod.Get, $"https://user.dev.ltdo.xyz/user/getinfo"))
       {
         if (!string.IsNullOrEmpty(token))
         {
