@@ -31,7 +31,7 @@ namespace LT.DigitalOffice.Gateway.Clients.AuthServiceClients
     {
       LoginResult result = new();
 
-      using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, $"https://auth.dev.ltdo.xyz/Auth/login"))
+      using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, $"https://auth.ltdo.xyz/Auth/login"))
       {
         request.Content = JsonContent.Create(userCredentials);
 
