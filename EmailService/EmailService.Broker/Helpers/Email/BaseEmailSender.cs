@@ -52,6 +52,8 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
           Body = dbEmail.Text
         };
 
+        message.IsBodyHtml = true;
+
         SmtpClient smtp = new SmtpClient(
           SmtpCredentials.Host,
           SmtpCredentials.Port)
@@ -87,6 +89,8 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
           Subject = dbEmail.Subject,
           Body = dbEmail.Text
         };
+
+        message.IsBodyHtml = true;
 
         SmtpClient smtp = new SmtpClient(
           smtpInfo.Host,

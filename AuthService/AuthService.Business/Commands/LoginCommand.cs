@@ -47,7 +47,7 @@ namespace LT.DigitalOffice.AuthService.Business.Commands
       _logger.LogInformation(
         "User login request for LoginData: '{loginData}' from IP: '{requestIP}'.",
         request.LoginData,
-        _httpContext.Connection.RemoteIpAddress);
+        _httpContext.Request.Host.Host);
 
       _validator.ValidateAndThrowCustom(request);
 
@@ -73,7 +73,7 @@ namespace LT.DigitalOffice.AuthService.Business.Commands
       _logger.LogInformation(
         "User was successfully logged in with LoginData: '{loginData}' from IP: {requestIP}",
         request.LoginData,
-        _httpContext.Connection.RemoteIpAddress);
+        _httpContext.Request.Host.Host);
 
       return result;
     }
