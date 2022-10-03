@@ -4,9 +4,11 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using LT.DigitalOffice.EmailService.Data.Interfaces;
 using LT.DigitalOffice.EmailService.Models.Db;
-using LT.DigitalOffice.EmailService.Models.Dto.Helpers;
 using LT.DigitalOffice.EmailService.Models.Dto.Models;
 using Microsoft.Extensions.Logging;
+using EASendMail;
+using SmtpClientMail = System.Net.Mail.SmtpClient;
+using SmtpClient = EASendMail.SmtpClient;
 
 namespace LT.DigitalOffice.EmailService.Broker.Helpers
 {
@@ -15,56 +17,48 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
     private readonly ISmtpSettingsRepository _repository;
     protected readonly ILogger _logger;
 
-    private async Task<bool> GetSmtpCredentialsAsync()
+    private async Task<SmtpServer> GetSmtpCredentialsAsync()
     {
       DbModuleSetting result = await _repository.GetAsync();
 
+      SmtpServer oServer = null;
+
       if (result != null)
       {
-        SmtpCredentials.Host = result.Host;
-        SmtpCredentials.Port = result.Port;
-        SmtpCredentials.Email = result.Email;
-        SmtpCredentials.Password = result.Password;
-        SmtpCredentials.EnableSsl = result.EnableSsl;
+        oServer = new SmtpServer(result.Host);
+        oServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
+        oServer.Port = result.Port;
+        oServer.AuthType = SmtpAuthType.XOAUTH2;
+        oServer.User = result.Email;
+        oServer.Password = result.Password;
 
-        return true;
+        return oServer;
       }
 
       _logger?.LogError("Cannot get smtp credentials.");
 
-      return false;
+      return oServer;
     }
 
     protected async Task<bool> SendAsync(DbEmail dbEmail)
     {
-      if (!SmtpCredentials.HasValue && !(await GetSmtpCredentialsAsync()))
+      SmtpServer oServer = await GetSmtpCredentialsAsync();
+
+      if (oServer is null)
       {
         return false;
       }
 
       try
       {
-        MailMessage message = new MailMessage(
-        SmtpCredentials.Email,
-        dbEmail.Receiver)
-        {
-          Subject = dbEmail.Subject,
-          Body = dbEmail.Text
-        };
+        SmtpMail oMail = new SmtpMail("TryIt");
+        oMail.From = oServer.User;
+        oMail.To = dbEmail.Receiver;
+        oMail.Subject = dbEmail.Subject;
+        oMail.TextBody = dbEmail.Text;
 
-        message.IsBodyHtml = true;
-
-        SmtpClient smtp = new SmtpClient(
-          SmtpCredentials.Host,
-          SmtpCredentials.Port)
-        {
-          Credentials = new NetworkCredential(
-            SmtpCredentials.Email,
-            SmtpCredentials.Password),
-          EnableSsl = SmtpCredentials.EnableSsl
-        };
-
-        smtp.Send(message);
+        SmtpClient oSmtp = new SmtpClient();
+        oSmtp.SendMail(oServer, oMail);
       }
       catch (Exception exc)
       {
@@ -92,7 +86,7 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
 
         message.IsBodyHtml = true;
 
-        SmtpClient smtp = new SmtpClient(
+        SmtpClientMail smtp = new SmtpClientMail(
           smtpInfo.Host,
           smtpInfo.Port)
         {
