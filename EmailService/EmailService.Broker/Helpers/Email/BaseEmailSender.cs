@@ -7,8 +7,8 @@ using LT.DigitalOffice.EmailService.Models.Db;
 using LT.DigitalOffice.EmailService.Models.Dto.Models;
 using Microsoft.Extensions.Logging;
 using EASendMail;
-using SmtpClientMail = System.Net.Mail.SmtpClient;
-using SmtpClient = EASendMail.SmtpClient;
+using SystemSmtpClient = System.Net.Mail.SmtpClient;
+using EASendMailSmtpClient = EASendMail.SmtpClient;
 
 namespace LT.DigitalOffice.EmailService.Broker.Helpers
 {
@@ -57,7 +57,7 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
         oMail.Subject = dbEmail.Subject;
         oMail.TextBody = dbEmail.Text;
 
-        SmtpClient oSmtp = new SmtpClient();
+        EASendMailSmtpClient oSmtp = new EASendMailSmtpClient();
         oSmtp.SendMail(oServer, oMail);
       }
       catch (Exception exc)
@@ -86,7 +86,7 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
 
         message.IsBodyHtml = true;
 
-        SmtpClientMail smtp = new SmtpClientMail(
+        SystemSmtpClient smtp = new SystemSmtpClient(
           smtpInfo.Host,
           smtpInfo.Port)
         {
