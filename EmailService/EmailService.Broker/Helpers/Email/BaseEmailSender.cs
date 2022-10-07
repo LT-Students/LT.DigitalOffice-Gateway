@@ -25,19 +25,12 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
 
       if (result != null)
       {
-/*        oServer = new SmtpServer(result.Host);
-        oServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
+        oServer = new SmtpServer(result.Host);
+        oServer.ConnectType = SmtpConnectType.ConnectSTARTTLS;
         oServer.Port = result.Port;
         oServer.AuthType = SmtpAuthType.XOAUTH2;
         oServer.User = result.Email;
-        oServer.Password = result.Password;*/
-
-        oServer = new SmtpServer("smtp.office365.com");
-        oServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
-        oServer.Port = 587;
-        oServer.AuthType = SmtpAuthType.XOAUTH2;
-        oServer.User = "Digital.Office@lanit-tercom.com";
-        oServer.Password = "435OrNidUdTi";
+        oServer.Password = result.Password;
 
         return oServer;
       }
