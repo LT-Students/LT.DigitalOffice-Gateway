@@ -26,7 +26,7 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
       if (result != null)
       {
         oServer = new SmtpServer(result.Host);
-        oServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
+        oServer.ConnectType = SmtpConnectType.ConnectSTARTTLS;
         oServer.Port = result.Port;
         oServer.AuthType = SmtpAuthType.XOAUTH2;
         oServer.User = result.Email;
