@@ -6,7 +6,6 @@ using LT.DigitalOffice.EmailService.Data.Interfaces;
 using LT.DigitalOffice.EmailService.Models.Db;
 using LT.DigitalOffice.EmailService.Models.Dto.Models;
 using Microsoft.Extensions.Logging;
-using EASendMail;
 using MimeKit;
 using SystemSmtpClient = System.Net.Mail.SmtpClient;
 using SmtpClient = MailKit.Net.Smtp.SmtpClient;
