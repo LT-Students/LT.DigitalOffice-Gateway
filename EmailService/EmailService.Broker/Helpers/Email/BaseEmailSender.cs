@@ -6,9 +6,10 @@ using LT.DigitalOffice.EmailService.Data.Interfaces;
 using LT.DigitalOffice.EmailService.Models.Db;
 using LT.DigitalOffice.EmailService.Models.Dto.Models;
 using Microsoft.Extensions.Logging;
-using EASendMail;
+using MimeKit;
 using SystemSmtpClient = System.Net.Mail.SmtpClient;
-using EASendMailSmtpClient = EASendMail.SmtpClient;
+using SmtpClient = MailKit.Net.Smtp.SmtpClient;
+using MailKit.Security;
 
 namespace LT.DigitalOffice.EmailService.Broker.Helpers
 {
@@ -17,48 +18,48 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
     private readonly ISmtpSettingsRepository _repository;
     protected readonly ILogger _logger;
 
-    private async Task<SmtpServer> GetSmtpCredentialsAsync()
+    private async Task<DbModuleSetting> GetSmtpCredentialsAsync()
     {
       DbModuleSetting result = await _repository.GetAsync();
 
-      SmtpServer oServer = null;
-
-      if (result != null)
+      if (result is null)
       {
-        oServer = new SmtpServer(result.Host);
-        oServer.ConnectType = SmtpConnectType.ConnectSTARTTLS;
-        oServer.Port = result.Port;
-        oServer.AuthType = SmtpAuthType.XOAUTH2;
-        oServer.User = result.Email;
-        oServer.Password = result.Password;
-
-        return oServer;
+        _logger?.LogError("Cannot get smtp credentials.");
       }
 
-      _logger?.LogError("Cannot get smtp credentials.");
-
-      return oServer;
+      return result;
     }
 
     protected async Task<bool> SendAsync(DbEmail dbEmail)
     {
-      SmtpServer oServer = await GetSmtpCredentialsAsync();
+      DbModuleSetting result = await GetSmtpCredentialsAsync();
 
-      if (oServer is null)
+      if (result is null)
       {
         return false;
       }
 
       try
       {
-        SmtpMail oMail = new SmtpMail("TryIt");
-        oMail.From = oServer.User;
-        oMail.To = dbEmail.Receiver;
-        oMail.Subject = dbEmail.Subject;
-        oMail.TextBody = dbEmail.Text;
+        using SmtpClient client = new SmtpClient();
+        await client.ConnectAsync(result.Host, result.Port, SecureSocketOptions.StartTls);
+        await client.AuthenticateAsync(result.Email, result.Password);
 
-        EASendMailSmtpClient oSmtp = new EASendMailSmtpClient();
-        oSmtp.SendMail(oServer, oMail);
+        MailboxAddress addressTo = new MailboxAddress("addressTo", dbEmail.Receiver);
+        MailboxAddress addressFrom = new MailboxAddress("addressFrom", result.Email);
+
+        BodyBuilder bodyBuilder = new BodyBuilder
+        {
+          TextBody = dbEmail.Text
+        };
+
+        MimeMessage emailMessage = new MimeMessage();
+        emailMessage.From.Add(addressFrom);
+        emailMessage.To.Add(addressTo);
+        emailMessage.Subject = dbEmail.Subject;
+        emailMessage.Body = bodyBuilder.ToMessageBody();
+
+        await client.SendAsync(emailMessage);
       }
       catch (Exception exc)
       {
@@ -69,6 +70,7 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
 
         return false;
       }
+
       return true;
     }
 
