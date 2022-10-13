@@ -45,12 +45,12 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
         await client.ConnectAsync(result.Host, result.Port, SecureSocketOptions.StartTls);
         await client.AuthenticateAsync(result.Email, result.Password);
 
-        MailboxAddress addressTo = new MailboxAddress("addressTo", dbEmail.Receiver);
-        MailboxAddress addressFrom = new MailboxAddress("addressFrom", result.Email);
+        MailboxAddress addressTo = new MailboxAddress(dbEmail.Receiver, dbEmail.Receiver);
+        MailboxAddress addressFrom = new MailboxAddress(result.Email, result.Email);
 
         BodyBuilder bodyBuilder = new BodyBuilder
         {
-          TextBody = dbEmail.Text
+          HtmlBody = string.Format("<p style='color:black;'>{0}</p>", dbEmail.Text) 
         };
 
         MimeMessage emailMessage = new MimeMessage();
