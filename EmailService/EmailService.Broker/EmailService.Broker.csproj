@@ -3,6 +3,10 @@
   <Import Project="$(ProjectDir)..\EmailService.Configurations.targets" />
 
   <ItemGroup>
+    <PackageReference Include="NETCore.MailKit" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EmailService.Data\EmailService.Data.csproj" />
     <ProjectReference Include="..\EmailService.Models.Db\EmailService.Models.Db.csproj" />
     <ProjectReference Include="..\EmailService.Models.Dto\EmailService.Models.Dto.csproj" />
