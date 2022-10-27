@@ -12,7 +12,7 @@ namespace LT.DigitalOffice.AdminService.Controllers
 {
   [Route("[controller]")]
   [ApiController]
-  public class AminController : ControllerBase
+  public class AdminController : ControllerBase
   {
     [HttpGet("find")]
     public async Task<FindResultResponse<ServiceConfigurationInfo>> FindAsync(
