@@ -78,27 +78,25 @@ namespace LT.DigitalOffice.EmailService.Broker.Helpers
     {
       try
       {
-        MailMessage message = new MailMessage(
-        smtpInfo.Email,
-        dbEmail.Receiver)
+        using SmtpClient client = new SmtpClient();
+        await client.ConnectAsync(smtpInfo.Host, smtpInfo.Port, SecureSocketOptions.StartTls);
+        await client.AuthenticateAsync(smtpInfo.Email, smtpInfo.Password);
+
+        MailboxAddress addressTo = new MailboxAddress(dbEmail.Receiver, dbEmail.Receiver);
+        MailboxAddress addressFrom = new MailboxAddress(smtpInfo.Email, smtpInfo.Email);
+
+        BodyBuilder bodyBuilder = new BodyBuilder
         {
-          Subject = dbEmail.Subject,
-          Body = dbEmail.Text
+          HtmlBody = string.Format("<p style='color:black;'>{0}</p>", dbEmail.Text)
         };
 
-        message.IsBodyHtml = true;
+        MimeMessage emailMessage = new MimeMessage();
+        emailMessage.From.Add(addressFrom);
+        emailMessage.To.Add(addressTo);
+        emailMessage.Subject = dbEmail.Subject;
+        emailMessage.Body = bodyBuilder.ToMessageBody();
 
-        SystemSmtpClient smtp = new SystemSmtpClient(
-          smtpInfo.Host,
-          smtpInfo.Port)
-        {
-          Credentials = new NetworkCredential(
-            smtpInfo.Email,
-            smtpInfo.Password),
-          EnableSsl = smtpInfo.EnableSsl
-        };
-
-        smtp.Send(message);
+        await client.SendAsync(emailMessage);
       }
       catch (Exception exc)
       {
