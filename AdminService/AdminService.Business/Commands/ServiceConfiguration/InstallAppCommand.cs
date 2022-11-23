@@ -88,7 +88,7 @@ namespace LT.DigitalOffice.AdminService.Business.Commands.ServiceConfiguration
       {
         return _responseCreator.CreateFailureResponse<bool>(
           HttpStatusCode.BadRequest,
-          new List<string>() { "The app is already installed." });
+          new List<string> { "The app is already installed." });
       }
 
       if (!_validator.ValidateCustom(request, out List<string> errors))
@@ -111,7 +111,7 @@ namespace LT.DigitalOffice.AdminService.Business.Commands.ServiceConfiguration
 
       if (request.ServicesToDisable.Count != countDisabledServices)
       {
-        response.Errors = new List<string>() { "not all services have been disabled." };
+        response.Errors = new List<string> { "not all services have been disabled." };
       }
       else
       {
