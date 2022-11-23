@@ -9,5 +9,6 @@ namespace LT.DigitalOffice.AdminService.Models.Dto.Models
     public string SiteUrl { get; set; }
     public ImageConsist Logo { get; set; }
     public ImageConsist Favicon { get; set; }
+    public DateTime CreatedAtUtc { get; set;}
   }
 }
