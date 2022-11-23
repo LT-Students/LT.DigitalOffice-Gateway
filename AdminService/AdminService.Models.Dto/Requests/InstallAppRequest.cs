@@ -8,7 +8,7 @@ namespace LT.DigitalOffice.AdminService.Models.Dto.Requests
   {
     public SmtpInfo SmtpInfo { get; set; }
     public AdminInfo AdminInfo { get; set; }
-    public GuiInfo GuiInfo { get; set; }
+    public CreateGuiRequest CreateGuiRequest { get; set; }
     public List<Guid> ServicesToDisable { get; set; }
 }
 }

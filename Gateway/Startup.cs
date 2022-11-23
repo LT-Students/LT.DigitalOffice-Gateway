@@ -23,22 +23,20 @@ namespace LT.DigitalOffice.Gateway
   {
     public const string CorsPolicyName = "LtDoCorsPolicy";
 
-    private readonly BaseServiceInfoConfig _serviceInfoConfig;
-
     private IConfiguration Configuration { get; }
 
     public Startup(IConfiguration configuration)
     {
       Configuration = configuration;
 
-      _serviceInfoConfig = Configuration
+      BaseServiceInfoConfig serviceInfoConfig = Configuration
         .GetSection(BaseServiceInfoConfig.SectionName)
         .Get<BaseServiceInfoConfig>();
 
-      Version = "1.0.0.0";
+      Version = "1.0.0.2";
       Description = "Gateway is a pattern for a single entry point to the program.";
       StartTime = DateTime.UtcNow;
-      ApiName = $"LT Digital Office - {_serviceInfoConfig.Name}";
+      ApiName = $"LT Digital Office - {serviceInfoConfig.Name}";
     }
 
     #region public methods

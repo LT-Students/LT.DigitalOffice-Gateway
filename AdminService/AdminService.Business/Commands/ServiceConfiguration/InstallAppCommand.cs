@@ -88,7 +88,7 @@ namespace LT.DigitalOffice.AdminService.Business.Commands.ServiceConfiguration
       {
         return _responseCreator.CreateFailureResponse<bool>(
           HttpStatusCode.BadRequest,
-          new List<string>() { "The app is already installed." });
+          new List<string> { "The app is already installed." });
       }
 
       if (!_validator.ValidateCustom(request, out List<string> errors))
@@ -104,14 +104,14 @@ namespace LT.DigitalOffice.AdminService.Business.Commands.ServiceConfiguration
 
       OperationResultResponse<bool> response = new();
 
-      await _guiRepository.CreateAsync(_guiMapper.Map(request.GuiInfo));
+      await _guiRepository.CreateAsync(_guiMapper.Map(request.CreateGuiRequest));
       int countDisabledServices = await _configurationRepository.InstallAppAsync(request.ServicesToDisable);
 
       _httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.Created;
 
       if (request.ServicesToDisable.Count != countDisabledServices)
       {
-        response.Errors = new List<string>() { "not all services have been disabled." };
+        response.Errors = new List<string> { "not all services have been disabled." };
       }
       else
       {
