@@ -33,7 +33,7 @@ namespace LT.DigitalOffice.Gateway
         .GetSection(BaseServiceInfoConfig.SectionName)
         .Get<BaseServiceInfoConfig>();
 
-      Version = "1.0.0.0";
+      Version = "1.0.0.2";
       Description = "Gateway is a pattern for a single entry point to the program.";
       StartTime = DateTime.UtcNow;
       ApiName = $"LT Digital Office - {serviceInfoConfig.Name}";
