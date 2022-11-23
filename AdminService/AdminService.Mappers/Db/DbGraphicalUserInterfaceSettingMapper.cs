@@ -1,13 +1,13 @@
 ﻿using System;
 using LT.DigitalOffice.AdminService.Mappers.Db.Interfaces;
 using LT.DigitalOffice.AdminService.Models.Db;
-using LT.DigitalOffice.AdminService.Models.Dto.Models;
+using LT.DigitalOffice.AdminService.Models.Dto.Requests;
 
 namespace LT.DigitalOffice.AdminService.Mappers.Db
 {
   public class DbGraphicalUserInterfaceSettingMapper : IDbGraphicalUserInterfaceSettingMapper
   {
-    public DbGraphicalUserInterfaceSetting Map(GuiInfo request)
+    public DbGraphicalUserInterfaceSetting Map(CreateGuiRequest request)
     {
       if (request is null)
       {
