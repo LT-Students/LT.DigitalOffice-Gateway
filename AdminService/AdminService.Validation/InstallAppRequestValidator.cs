@@ -111,30 +111,30 @@ namespace LT.DigitalOffice.AdminService.Validation
             .NotEmpty().WithMessage("Password can't be empty.");
         });
 
-      RuleFor(request => request.GuiInfo)
+      RuleFor(request => request.CreateGuiRequest)
         .Cascade(CascadeMode.Stop)
         .NotNull().WithMessage("Gui information can't be null.")
         .DependentRules(() =>
         {
-          RuleFor(r => r.GuiInfo.SiteUrl)
+          RuleFor(r => r.CreateGuiRequest.SiteUrl)
             .NotEmpty().WithMessage("Url can't be empty.");
 
-          When(r => r.GuiInfo.Logo is not null, () =>
+          When(r => r.CreateGuiRequest.Logo is not null, () =>
           {
-            RuleFor(r => r.GuiInfo.Logo.Content)
+            RuleFor(r => r.CreateGuiRequest.Logo.Content)
               .SetValidator(imageContentValidator);
 
-            RuleFor(r => r.GuiInfo.Logo.Extension)
+            RuleFor(r => r.CreateGuiRequest.Logo.Extension)
               .SetValidator(imageExtensionValidator);
           });
 
           // TO DO: when there will be desigion about favicon's extension and size, fix validation according this desigion
-          When(r => r.GuiInfo.Favicon is not null, () =>
+          When(r => r.CreateGuiRequest.Favicon is not null, () =>
           {
-            RuleFor(r => r.GuiInfo.Favicon.Content)
+            RuleFor(r => r.CreateGuiRequest.Favicon.Content)
               .SetValidator(imageContentValidator);
 
-            RuleFor(r => r.GuiInfo.Favicon.Extension)
+            RuleFor(r => r.CreateGuiRequest.Favicon.Extension)
               .Must(x => x == ".png" || x == ".svg" || x == ".ico")
               .WithMessage("Wrong favicon extension");
           });
